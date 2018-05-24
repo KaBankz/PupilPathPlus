@@ -32,17 +32,17 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
-* Version 2.3:
+* Version 2.3 (May 14, 2018):
     - Fixed minor bugs & added styles to grade changer.
-* Version 2.2:
+* Version 2.2 (May 14, 2018):
     - Fixed major jQuery compatibility bug.
-* Version 2.1:
+* Version 2.1 (May 13, 2018):
     - Fixed minor bug & removed useless code.
-* Version 2.0:
+* Version 2.0 (May 12, 2018):
     - Fixed minor bugs & added in visual grade changer.
-* Version 1.3:
+* Version 1.3 (May 11, 2018):
     - Added support for more Marking Periods.
-* Version 1.2:
+* Version 1.2 (May 9, 2018):
     - Added in jQuery.
-* Version 1.0:
+* Version 1.0 (May 4, 2018):
 	- Created userscript.

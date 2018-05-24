@@ -3,7 +3,7 @@
 [![Status](https://img.shields.io/badge/Status-Developing-yellow.svg?longCache=true&style=for-the-badge "Active Development")](https://github.com/DeathHackz/PupilPathPlus)
 [![Contact](https://img.shields.io/badge/Contact-DeathHackz-red.svg?longCache=true&style=for-the-badge "DeathHackz @GitHub")](https://github.com/DeathHackz)
 [![Install](https://img.shields.io/badge/Install-GreasyFork-green.svg?longCache=true&style=for-the-badge "Install PupilPath Plus")](https://github.com/DeathHackz/PupilPathPlus/#installation)
-=
+
 
 Description
 -----------
@@ -12,25 +12,25 @@ A userscript which calculates and shows your total average; This also includes a
 Features
 --------
 * Average Calculator
-* Grade Changer (visual only)
+* Grade Changer ***(visual only)***
 
 Screenshots
 -----------
-> Total Average Appended to Website
+> **Total Average Appended to Website**
 ![Total Average Appended to Website](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Total_Average.png?raw=true "Total Average Appended to Website")
 
-> Grade Changer Button
+> **Grade Changer Button**
 ![Grade Changer Button](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer_Btn.png?raw=true "Grade Changer Button")
 
-> Grade Changer Interface
+> **Grade Changer Interface**
 ![Grade Changer Interface](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer.png?raw=true "Grade Changer Interface")
 
-> Changed Grades
+> **Changed Grades**
 ![Changed Grades](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Changed_Grades.png?raw=true "Changed Grades")
 
 Installation
 -------
-You must have a userscript manager installed such as
+You **must** have a userscript manager installed such as
 
 * [Tampermonkey](https://tampermonkey.net/)
 * [Greasemonkey](https://www.greasespot.net/) (FireFox Only)

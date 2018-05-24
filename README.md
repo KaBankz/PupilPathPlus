@@ -31,5 +31,7 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 1.2:
+    - Added in jQuery.
 * Version 1.0:
 	- Created userscript.

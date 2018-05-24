@@ -3,22 +3,20 @@
 // @namespace    https://github.com/DeathHackz
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @icon         http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Calculator-icon.png
-// @version      1.3
-// @description  Appends Total Average to PupilPath
+// @version      2.0
+// @description  Appends total average to PupilPath, and includes a grade changer feature (visual only)
 // @author       DeathHackz
 // @include      https://pupilpath.skedula.com/*
 // @grant        none
 // ==/UserScript==
 
-(function() {
-    'use strict';
-  
+function getAverage() {
     if ($('#progress-card').length === 1) {
   
       if ($('#totalaverage').length === 0) {
-        $('.information').prepend("<a id='avgli' href='#'><p style='position: static;float: right;padding-top: 10px;padding-right: 10px;'>Total Average: <img id='avgimg' src='' /><span id='totalaverage'></span></p></a>");
+        $('.information').prepend("<a id='avgli' href='#'><p style='color: #585b66;position: static;float: right;padding-top: 10px;padding-right: 10px;'>Total Average: <img id='avgimg' src='' /><span id='totalaverage'></span></p></a>");
       }
-
+      
       var links = document.querySelectorAll('tr[style="cursor: pointer"]');
       var One = "";
       var Two = "";
@@ -105,15 +103,19 @@
   
       if (avgfix >= 90) {
         avgimg = "/img/ico/star.png";
+        fcolor = "#0087FF";
       } else {
         if (avgfix >= 80) {
           avgimg = "/img/ico/tick.png";
+          fcolor = "#1FBA24";
         } else {
-          if (avgfix >= 70) {
+          if (avgfix >= 65) {
             avgimg = "/img/ico/error.png";
+            fcolor = "#AA9901";
           } else {
-            if (avgfix < 65) {
+            if (avgfix <= 64) {
               avgimg = "/img/ico/exclamation.png";
+              fcolor = "#CF1920";
             }
           }
         }
@@ -122,8 +124,109 @@
       if ($('#totalaverage').length === 1) {
         $('#totalaverage').text(" " + finalavg);
         $('#avgimg').attr("src", avgimg);
+        document.getElementById('totalaverage').style.color = fcolor;
       }
-      
+  
+      $("#avgli").click(function() {
+        alert('Estimated Average: ' + finalavg + '\n' + 'Your actual average may vary depending on how much each class is weighed');
+      });
     }
-      
-  })();
+  }
+  window.onload = getAverage();
+  
+  if ($('#progress-card').length === 1) {
+    $('#profile-links').append("<br /><a href='#' onClick=$('#modifygrades').toggle()>Edit Grades</a>");
+    $("<form style='display:none;padding-bottom:10px;' id='modifygrades'></form>").insertBefore(".notification");
+  
+    var number = 0;
+    var links = document.querySelectorAll('tr[style="cursor: pointer"]');
+  
+    for (var i = 0; i < links.length; i++) {
+      var ck = $("#progress-card tr td:nth-child(5)")[i].innerHTML;
+      if (ck == "-") {} else {
+        number = number + 1;
+        var newid = number + "active";
+        var kk = links[i];
+        kk.setAttribute("id", newid);
+      }
+    }
+    var dop = 0;
+    var aclass = [];
+    for (var t = 0; t < number; t++) {
+      dop = dop + 1;
+      var dopid = dop + "active";
+      var ioid = dop + "val";
+      var jid = dop + "grade";
+      var popo = document.getElementById(dopid).cells[1].innerText;
+      var mopo = document.getElementById(dopid).cells[4].children[0];
+      mopo.setAttribute("id", jid);
+      $('#modifygrades').append(popo + "<input style='margin:5px;' id=" + ioid + " type='number' min='0' max='100'></input><br />");
+      aclass.push(dop);
+  
+    }
+  
+    $('#modifygrades').append("<a class='btn' style='margin-right:5px;' onClick=$('#modifygrades').toggle()>Close</a><a class='btn' id='rstbtn' style='margin-right:5px;'>Reset</a><a class='btn' id='clearbtn' style='margin-right:5px;'>Clear</a><a style='margin-right:5px;' id='setbtn' class='btn'>Set</a>");
+  }
+  
+  $("#clearbtn").click(function() {
+    $(':input', '#modifygrades').val('');
+  });
+  
+  $("#rstbtn").click(function() {
+    for (var q = 0; q < number; q++) {
+      $("#" + noo).remove();
+      $("#" + number + "newgrades").remove();
+      var ioq = aclass[q];
+      var noo = ioq + "newgrades";
+      var kid = ioq + "grade";
+      document.getElementById(kid).style.display = "initial";
+    }
+    getAverage();
+  });
+  
+  $("#setbtn").click(function() {
+    for (var p = 0; p < aclass.length; p++) {
+      var iop = aclass[p];
+      var mmm = iop + "val";
+      var jj = $("#" + mmm).val();
+      var catag;
+      var gimg;
+      var ncolor;
+      var ooid = iop + "active";
+      var gid = iop + "grade";
+      var nio = iop + "newgrades";
+      var pio = document.getElementById(nio);
+      var dopo = document.getElementById(ooid).cells[4].children[0];
+      if (jj == "") {
+        dopo.style.display = "initial";
+      } else {
+        if (jj >= 90) {
+          gimg = "/img/ico/star.png";
+          catag = "Honors";
+          ncolor = "#0087FF";
+        } else {
+          if (jj >= 80) {
+            gimg = "/img/ico/tick.png";
+            catag = "Passing";
+            ncolor = "#1FBA24";
+          } else {
+            if (jj >= 65) {
+              gimg = "/img/ico/error.png";
+              catag = "Borderline";
+              ncolor = "#AA9901";
+            } else {
+              if (jj <= 64) {
+                gimg = "/img/ico/exclamation.png";
+                catag = "Failing";
+                ncolor = "#CF1920";
+              }
+            }
+          }
+        }
+        dopo.style.display = "none";
+        $("#" + nio).remove();
+        $("<span id=" + nio + " style=color:" + ncolor + " data-gtype=" + catag + "><img src=" + gimg + "> " + jj + "</span>").insertBefore("#" + gid);
+      }
+    }
+    getAverage();
+  });

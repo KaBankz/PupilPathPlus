@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         PupilPath Plus
 // @namespace    https://github.com/DeathHackz
-// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js
 // @icon         http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Calculator-icon.png
-// @version      2.1
+// @version      2.2
 // @description  Appends total average to PupilPath, and includes a grade changer feature (visual only)
 // @author       DeathHackz
 // @include      https://pupilpath.skedula.com/*

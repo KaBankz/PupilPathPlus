@@ -31,6 +31,8 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 1.3:
+    - Added support for more Marking Periods.
 * Version 1.2:
     - Added in jQuery.
 * Version 1.0:

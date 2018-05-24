@@ -5,6 +5,7 @@ A userscript which calculates and shows your total average.
 Features
 --------
 * Average Calculator
+* Grade Changer (visual only)
 
 Credits
 ------------
@@ -31,6 +32,8 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 2.0:
+    - Fixed minor bugs & added in visual grade changer.
 * Version 1.3:
     - Added support for more Marking Periods.
 * Version 1.2:

@@ -1,6 +1,6 @@
 # PupilPath Plus
-![Version](https://img.shields.io/badge/Version-2.3-blue.svg?longCache=true&style=for-the-badge "Version 2.3")
-![Status](https://img.shields.io/badge/Status-Developing-yellow.svg?longCache=true&style=for-the-badge "Active Development")
+[![Version](https://img.shields.io/badge/Version-2.3-blue.svg?longCache=true&style=for-the-badge "Version 2.3")](#)
+[![Status](https://img.shields.io/badge/Status-Developing-yellow.svg?longCache=true&style=for-the-badge "Active Development")](#)
 
 A userscript which calculates and shows your total average and more...
 
@@ -12,16 +12,16 @@ Features
 Screenshots
 -----------
 > Total Average Appended to Website
-![Total Average Appended to Website](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Total_Average.png?raw=true "Total Average Appended to Website")
+[![Total Average Appended to Website](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Total_Average.png?raw=true "Total Average Appended to Website")](#)
 
 > Grade Changer Button
-![Grade Changer Button](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer_Btn.png?raw=true "Grade Changer Button")
+[![Grade Changer Button](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer_Btn.png?raw=true "Grade Changer Button")](#)
 
 > Grade Changer Interface
-![Grade Changer Interface](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer.png?raw=true "Grade Changer Interface")
+[![Grade Changer Interface](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer.png?raw=true "Grade Changer Interface")](#)
 
 > Changed Grades
-![Changed Grades](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Changed_Grades.png?raw=true "Changed Grades")
+[![Changed Grades](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Changed_Grades.png?raw=true "Changed Grades")](#)
 
 Installation
 -------

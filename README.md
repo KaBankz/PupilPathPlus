@@ -7,6 +7,17 @@ Features
 * Average Calculator
 * Grade Changer (visual only)
 
+Install
+--------
+You must have a userscript manager installed such as
+
+* [Tampermonkey](https://tampermonkey.net/)
+* [Greasemonkey](https://www.greasespot.net/) (FireFox Only)
+
+Then just click the link below and click install
+
+* [Greasy Fork](https://greasyfork.org/en/scripts/368390)
+
 Credits
 ------------
 Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83733fb1d4264a3785b14249d1) code, written by [cqfllp](https://github.com/cqfllp).

@@ -32,6 +32,8 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 2.3:
+    - Fixed minor bugs & added styles to grade changer.
 * Version 2.2:
     - Fixed major jQuery compatibility bug.
 * Version 2.1:

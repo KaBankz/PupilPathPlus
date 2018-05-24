@@ -3,7 +3,7 @@
 // @namespace    https://github.com/DeathHackz
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // @icon         http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Calculator-icon.png
-// @version      2.0
+// @version      2.1
 // @description  Appends total average to PupilPath, and includes a grade changer feature (visual only)
 // @author       DeathHackz
 // @include      https://pupilpath.skedula.com/*
@@ -14,9 +14,8 @@ function getAverage() {
     if ($('#progress-card').length === 1) {
   
       if ($('#totalaverage').length === 0) {
-        $('.information').prepend("<a id='avgli' href='#'><p style='color: #585b66;position: static;float: right;padding-top: 10px;padding-right: 10px;'>Total Average: <img id='avgimg' src='' /><span id='totalaverage'></span></p></a>");
+        $('.information').prepend("<p style='color: #585b66;position: static;float: right;padding-top: 10px;padding-right: 10px;'>Total Average: <img id='avgimg' src='' /><span id='totalaverage'></span></p>");
       }
-      
       var links = document.querySelectorAll('tr[style="cursor: pointer"]');
       var One = "";
       var Two = "";
@@ -126,10 +125,6 @@ function getAverage() {
         $('#avgimg').attr("src", avgimg);
         document.getElementById('totalaverage').style.color = fcolor;
       }
-  
-      $("#avgli").click(function() {
-        alert('Estimated Average: ' + finalavg + '\n' + 'Your actual average may vary depending on how much each class is weighed');
-      });
     }
   }
   window.onload = getAverage();

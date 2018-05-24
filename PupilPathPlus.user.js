@@ -3,7 +3,7 @@
 // @namespace    https://github.com/DeathHackz
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js
 // @icon         http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Calculator-icon.png
-// @version      2.2
+// @version      2.3
 // @description  Appends total average to PupilPath, and includes a grade changer feature (visual only)
 // @author       DeathHackz
 // @include      https://pupilpath.skedula.com/*
@@ -28,7 +28,6 @@ function getAverage() {
       var Nine = "";
       var num = 0;
       var count = 0;
-
       for (var i = 0; i < links.length; i++) {
         var str = links[i].innerText;
         One = str.split('MP1:  ')[1];
@@ -130,7 +129,7 @@ function getAverage() {
   window.onload = getAverage();
   
   if ($('#progress-card').length === 1) {
-    $('#profile-links').append("<br /><a href='#' onClick=$('#modifygrades').toggle()>Edit Grades</a>");
+    $('#profile-links').append("<br /><a href='#' style='margin-right:3px;' onClick=$('#modifygrades').toggle()>Edit Grades</a>");
     $("<form style='display:none;padding-bottom:10px;' id='modifygrades'></form>").insertBefore(".notification");
   
     var number = 0;
@@ -155,13 +154,79 @@ function getAverage() {
       var popo = document.getElementById(dopid).cells[1].innerText;
       var mopo = document.getElementById(dopid).cells[4].children[0];
       mopo.setAttribute("id", jid);
-      $('#modifygrades').append(popo + "<input style='margin:5px;' id=" + ioid + " type='number' min='0' max='100'></input><br />");
+      var cholo = document.getElementById(dopid).cells[4].children[0].innerText.substring(1);
+      $('#modifygrades').append(popo + "<input style='margin:5px;' id=" + ioid + " type='number' value=" + cholo + " min='0' max='100'></input><br />");
       aclass.push(dop);
   
     }
   
-    $('#modifygrades').append("<a class='btn' style='margin-right:5px;' onClick=$('#modifygrades').toggle()>Close</a><a class='btn' id='rstbtn' style='margin-right:5px;'>Reset</a><a class='btn' id='clearbtn' style='margin-right:5px;'>Clear</a><a style='margin-right:5px;' id='setbtn' class='btn'>Set</a>");
+    $('#modifygrades').append("<a class='btn btn-secondary' style='margin-right:5px;' onClick=$('#modifygrades').toggle()>Close</a><a class='btn btn-danger' id='rstbtn' style='margin-right:5px;'>Reset</a><a class='btn btn-warning' id='clearbtn' style='margin-right:5px;'>Clear</a><a style='margin-right:5px;' id='setbtn' class='btn btn-success'>Set</a><a style='float:right;' id='savebtn' class='btn btn-danger'>Save</a>");
   }
+  
+  function setsavedgrades() {
+    if (sessionStorage.length === 1) {
+      var check = JSON.parse(sessionStorage.getItem('SavedGrades'));
+      if (check.length > 0) {
+        $('#modifygrades').prepend("<p id='warningsave' style='float:right;'>These are not your real grades, click reset to see your actual grades</p>");
+        for (var p = 0; p < aclass.length; p++) {
+          var iop = aclass[p];
+          var mmm = iop + "val";
+          var jj = check[p];
+          var catag;
+          var gimg;
+          var ncolor;
+          var ooid = iop + "active";
+          var gid = iop + "grade";
+          var nio = iop + "newgrades";
+          var pio = document.getElementById(nio);
+          var dopo = document.getElementById(ooid).cells[4].children[0];
+          if (jj == "") {
+            dopo.style.display = "initial";
+          } else {
+            if (jj >= 90) {
+              gimg = "/img/ico/star.png";
+              catag = "Honors";
+              ncolor = "#0087FF";
+            } else {
+              if (jj >= 80) {
+                gimg = "/img/ico/tick.png";
+                catag = "Passing";
+                ncolor = "#1FBA24";
+              } else {
+                if (jj >= 65) {
+                  gimg = "/img/ico/error.png";
+                  catag = "Borderline";
+                  ncolor = "#AA9901";
+                } else {
+                  if (jj <= 64) {
+                    gimg = "/img/ico/exclamation.png";
+                    catag = "Failing";
+                    ncolor = "#CF1920";
+                  }
+                }
+              }
+            }
+            dopo.style.display = "none";
+            $("#" + nio).remove();
+            $("<span id=" + nio + " style=color:" + ncolor + " data-gtype=" + catag + "><img src=" + gimg + "> " + jj + "</span>").insertBefore("#" + gid);
+          }
+        }
+        getAverage();
+      }
+    }
+  }
+  window.onload = setsavedgrades();
+  
+  $("#savebtn").click(function() {
+    var SavedGrades = [];
+    for (var o = 1; o < number + 1; o++) {
+      var opop = o + "val";
+      var oj = $("#" + opop).val();
+      SavedGrades.push(oj);
+    }
+    sessionStorage.setItem('SavedGrades', JSON.stringify(SavedGrades));
+    setsavedgrades();
+  });
   
   $("#clearbtn").click(function() {
     $(':input', '#modifygrades').val('');
@@ -175,7 +240,11 @@ function getAverage() {
       var noo = ioq + "newgrades";
       var kid = ioq + "grade";
       document.getElementById(kid).style.display = "initial";
+      var keke = document.getElementById(dopid).cells[4].children[0].innerText.substring(1);
+      $("#modifygrades")[0].reset();
     }
+    $('#warningsave').remove();
+    sessionStorage.clear();
     getAverage();
   });
   

@@ -39,6 +39,10 @@ Then just click the link below and click install
 
 * [Greasy Fork](https://greasyfork.org/en/scripts/368390)
 
+External Libraries
+------------------
+* [jQuery v1.5.1](https://blog.jquery.com/2011/02/24/jquery-151-released/)
+
 Credits
 -------
 Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83733fb1d4264a3785b14249d1) code, written by [cqfllp](https://github.com/cqfllp).

@@ -1,6 +1,6 @@
 PupilPath Plus
 =================
-A userscript which calculates and shows your total average.
+A userscript which calculates and shows your total average and more...
 
 Features
 --------
@@ -32,6 +32,8 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 2.1:
+    - Fixed minor bug & removed useless code.
 * Version 2.0:
     - Fixed minor bugs & added in visual grade changer.
 * Version 1.3:

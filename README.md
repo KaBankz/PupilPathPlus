@@ -1,26 +1,29 @@
 # PupilPath Plus
-[![Version](https://img.shields.io/badge/Version-2.3-blue.svg?longCache=true&style=for-the-badge "Version 2.3")](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-3.0-blue.svg?longCache=true&style=for-the-badge "Version 3.0")](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
 [![Status](https://img.shields.io/badge/Status-Developing-yellow.svg?longCache=true&style=for-the-badge "Active Development")](https://github.com/DeathHackz/PupilPathPlus)
-[![Contact](https://img.shields.io/badge/Contact-DeathHackz-red.svg?longCache=true&style=for-the-badge "DeathHackz @GitHub")](https://github.com/DeathHackz)
+[![Contact](https://img.shields.io/badge/Requests-Open-red.svg?longCache=true&style=for-the-badge "DeathHackz")](https://github.com/DeathHackz/PupilPathPlus/issues)
 [![Install](https://img.shields.io/badge/Install-GreasyFork-green.svg?longCache=true&style=for-the-badge "Install PupilPath Plus")](#installation)
-
 
 Description
 -----------
-This UserScript calculates your average and shows it on the site; Includes a visual grade changer.
+This UserScript calculates your average and shows it on the site, it also converts your percent average to letter, and 4.0 Scale; Also includes a visual grade changer.
 
 Features
 --------
 * Average Calculator
+* Average Converter
 * Grade Changer ***(visual only)***
 
 Screenshots
 -----------
-> **Total Average Appended to Website**
-![Total Average Appended to Website](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Total_Average.png?raw=true "Total Average Appended to Website")
+> **Total Average**
+![Total Average](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Total_Average.png?raw=true "Total Average")
 
-> **Grade Changer Button**
-![Grade Changer Button](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer_Btn.png?raw=true "Grade Changer Button")
+> **Average Converter**
+![Average Converter](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Average_Conversion.png?raw=true "Average Converter")
+
+> **Grade Changer & Info Buttons**
+![Grade Changer & Info Buttons](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Buttons.png?raw=true "Grade Changer & Info Buttons")
 
 > **Grade Changer Interface**
 ![Grade Changer Interface](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer.png?raw=true "Grade Changer Interface")
@@ -28,13 +31,20 @@ Screenshots
 > **Changed Grades**
 ![Changed Grades](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Changed_Grades.png?raw=true "Changed Grades")
 
+> **Info Popup**
+![Info Popup](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Info_Popup.png?raw=true "Info Popup")
+
+> **Update Changelog**
+![Update Changelog](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Update_Changelog.png?raw=true "Update Changelog")
+
 <a name="installation"></a>
 
 Installation
--------
+------------
 You **must** have a userscript manager installed such as
 
-* [Tampermonkey](https://tampermonkey.net)
+* [Tampermonkey](https://tampermonkey.net) (Recomended)
+* [Violentmonkey](https://violentmonkey.github.io/)
 * [Greasemonkey](https://www.greasespot.net) (FireFox Only)
 
 Then just click the link below and click install
@@ -44,6 +54,8 @@ Then just click the link below and click install
 External Libraries
 ------------------
 * [jQuery v1.5.1](https://blog.jquery.com/2011/02/24/jquery-151-released)
+* [Toastr](https://codeseven.github.io/toastr)
+* [Fancybox](http://fancybox.net)
 
 Credits
 -------
@@ -71,6 +83,14 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 3.0 (May 27, 2018):
+    - New Icon.
+    - Added Toastr.js.
+    - Added Fancybox.js.
+    - Added Average Converter.
+    - Added info popup.
+    - New grade changer design.
+    - New update changelog toast.
 * Version 2.3 (May 14, 2018):
     - Added styles to grade changer.
     - Fixed minor bugs.

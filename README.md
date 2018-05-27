@@ -31,8 +31,8 @@ Screenshots
 > **Changed Grades**
 ![Changed Grades](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Changed_Grades.png?raw=true "Changed Grades")
 
-> **Info Popup**
-![Info Popup](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Info_Popup.png?raw=true "Info Popup")
+> **Script Info Popup**
+![Script Info Popup](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Info_Popup.png?raw=true "Script Info Popup")
 
 > **Update Changelog**
 ![Update Changelog](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Update_Changelog.png?raw=true "Update Changelog")

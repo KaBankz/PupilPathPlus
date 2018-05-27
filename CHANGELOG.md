@@ -1,3 +1,13 @@
+## Version 3.0 (May 27, 2018):
+
+* New Icon.
+* Added Toastr.js.
+* Added Fancybox.js.
+* Added Average Converter.
+* Added info popup.
+* New grade changer design.
+* New update changelog toast.
+
 ## Version 2.3 (May 14, 2018):
 
 * Added styles to grade changer.

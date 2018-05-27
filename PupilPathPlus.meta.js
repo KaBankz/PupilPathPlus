@@ -10,7 +10,7 @@
 // @require      https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js
 // @icon         https://i.imgur.com/yT5O3Mz.png
 // @version      3.0
-// @description  This script calculates and converts your average, and has visual grade changer
+// @description  This script calculates and converts your average, it also has visual grade changer
 // @author       DeathHackz
 // @include      https://pupilpath.skedula.com/*
 // @grant        none

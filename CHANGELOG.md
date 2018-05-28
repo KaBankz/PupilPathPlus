@@ -1,3 +1,7 @@
+## Version 3.1 (May 28, 2018):
+
+* New Update Checker.
+
 ## Version 3.0 (May 27, 2018):
 
 * New Icon.

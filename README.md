@@ -1,8 +1,8 @@
 # PupilPath Plus
-[![Version](https://img.shields.io/badge/Version-3.0-blue.svg?longCache=true&style=for-the-badge "Version 3.0")](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
-[![Status](https://img.shields.io/badge/Status-Developing-yellow.svg?longCache=true&style=for-the-badge "Active Development")](https://github.com/DeathHackz/PupilPathPlus)
-[![Contact](https://img.shields.io/badge/Requests-Open-red.svg?longCache=true&style=for-the-badge "DeathHackz")](https://github.com/DeathHackz/PupilPathPlus/issues)
-[![Install](https://img.shields.io/badge/Install-GreasyFork-green.svg?longCache=true&style=for-the-badge "Install PupilPath Plus")](#installation)
+[![GitHub Release](https://img.shields.io/github/release/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
+[![Status](https://img.shields.io/badge/Status-Stable-green.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus)
+[![Github Issues](https://img.shields.io/github/issues/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/issues)
+[![Install](https://img.shields.io/badge/Install-GreasyFork-orange.svg?longCache=true&style=for-the-badge)](#installation)
 
 Description
 -----------
@@ -51,6 +51,12 @@ Then just click the link below and click install
 
 * [Greasy Fork](https://greasyfork.org/en/scripts/368390)
 
+Permissions
+-----------
+* **Access to external libraries** *(Needed for the script to run)*
+* **Access to https pages** *(Needed  to access PupilPath)*
+* **Access to internet** *(Needed to check for script updates)*
+
 External Libraries
 ------------------
 * [jQuery v1.5.1](https://blog.jquery.com/2011/02/24/jquery-151-released)
@@ -83,6 +89,8 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 3.1 (May 28, 2018):
+    - New Update Checker.
 * Version 3.0 (May 27, 2018):
     - New Icon.
     - Added Toastr.js.

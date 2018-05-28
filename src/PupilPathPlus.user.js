@@ -1,22 +1,24 @@
 // ==UserScript==
-// @name         PupilPath Plus
-// @namespace    https://github.com/DeathHackz
-// @homepageURL  https://github.com/DeathHackz/PupilPathPlus
-// @supportURL   https://github.com/DeathHackz/PupilPathPlus/issues
-// @updateURL    https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/PupilPathPlus.meta.js
-// @downloadURL  https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/PupilPathPlus.user.js
-// @require      https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js
-// @icon         https://i.imgur.com/yT5O3Mz.png
-// @version      3.0
-// @description  This script calculates and converts your average, it also has visual grade changer
-// @author       DeathHackz
-// @include      https://pupilpath.skedula.com/*
-// @grant        none
+// @name          PupilPath Plus
+// @namespace     https://github.com/DeathHackz
+// @homepageURL   https://github.com/DeathHackz/PupilPathPlus
+// @supportURL    https://github.com/DeathHackz/PupilPathPlus/issues
+// @updateURL     https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.meta.js
+// @downloadURL   https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js
+// @require       https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js
+// @require       https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js
+// @icon          https://github.com/DeathHackz/PupilPathPlus/blob/master/icon.png
+// @icon64        https://github.com/DeathHackz/PupilPathPlus/blob/master/icon.png
+// @version       3.1
+// @description   This script calculates and converts your average, it also has visual grade changer
+// @author        DeathHackz
+// @match         https://*.pupilpath.skedula.com/*
+// @grant         GM_xmlhttpRequest
 // ==/UserScript==
 
-var version = "v3.0";
+"use strict";
+var version = "3.1";
 
 $("head").append(
   '<link ' +
@@ -30,11 +32,49 @@ $("head").append(
   'rel="stylesheet" type="text/css">'
 );
 
+var url = "https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.meta.js";
+$.get(url, function (data) {
+  if (data.indexOf("// @version       " + version) != -1) {} else {
+    var pk = data.split("\n");
+    var results = pk.filter(function (value) {
+      return value.indexOf("// @version") >= 0;
+    });
+    var ok = results[0].split(" ");
+    var hh = ok.length - 1;
+    var newversion = ok[hh];
+    if (newversion > version) {
+      toastr.options = {
+        closeButton: true,
+        debug: false,
+        newestOnTop: false,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        preventDuplicates: true,
+        onclick: function () {
+          window.open(
+            "https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js"
+          );
+        },
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: 0,
+        extendedTimeOut: 0,
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        tapToDismiss: false
+      };
+      toastr.info("Click Here to Update Now!", "PupilPath Plus v" + newversion + " has been released!");
+    }
+  }
+}, "text");
+
 if (localStorage.length === 0) {
-  localStorage.setItem('PupilPath Plus Version', version);
+  localStorage.setItem('PupilPath Plus Version', "v" + version);
 }
 
-if (localStorage.getItem("PupilPath Plus Version") !== version) {
+if (localStorage.getItem("PupilPath Plus Version") !== "v" + version) {
   toastr.options = {
     closeButton: true,
     debug: false,
@@ -57,8 +97,8 @@ if (localStorage.getItem("PupilPath Plus Version") !== version) {
     hideMethod: "fadeOut",
     tapToDismiss: false
   };
-  toastr.info("View Changelog", "PupilPath Plus Updated to " + version);
-  localStorage.setItem('PupilPath Plus Version', version);
+  toastr.info("View Changelog", "PupilPath Plus Updated to v" + version);
+  localStorage.setItem('PupilPath Plus Version', "v" + version);
 }
 
 function getAverage() {
@@ -257,11 +297,9 @@ function getAverage() {
 }
 window.onload = getAverage();
 
-if ($('#progress-card').length === 1) {
+if ($('#sidebar').length === 1) {
   $("<a style='position:absolute;top:20px;left:30px;' id='cred' href='#credit'>PupilPath Plus</a>").insertAfter('#CloseMenu');
   $('body').append("<div style='display:none'><div id='credit'><h2>Info</h2><p>Thanks for using PupilPath Plus!</p><p>Please leave a review on <a target='_blank' href='https://greasyfork.org/en/scripts/368390/feedback'>Greasy Fork</a></p><a target='_blank' href='https://github.com/DeathHackz/PupilPathPlus/issues'><p>Found a bug?<p></a>Made by <a target='_blank' href='https://github.com/DeathHackz'>DeathHackz</a></p><p>View on <a target='_blank' href='https://github.com/DeathHackz/PupilPathPlus'>GitHub</a></p></div></div>");
-  $('body').append("<div style='display:none'><div id='editgfloat'></div></div>");
-
   $("a#cred").fancybox({
     'type': 'inline',
     'autoScale': true,
@@ -272,9 +310,10 @@ if ($('#progress-card').length === 1) {
     'padding': 20,
     'centerOnScroll': true
   });
+}
 
-  //$('#profile-links').append("<br /><a href='#testing' id='editg' style='margin-right:3px;' onClick=$('#modifygrades').toggle()>Edit Grades</a>");
-  //$("<form style='display:none;padding-bottom:10px;' id='modifygrades'></form>").insertBefore(".notification");
+if ($('#progress-card').length === 1) {
+  $('body').append("<div style='display:none'><div id='editgfloat'></div></div>");
   $('#profile-links').append("<br /><a href='#editgfloat' id='editg' style='margin-right:3px;'>Edit Grades</a>");
   $('#editgfloat').append("<form style='padding-bottom:10px;' id='modifygrades'></form>");
 

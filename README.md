@@ -3,6 +3,8 @@
 [![Status](https://img.shields.io/badge/Status-Stable-green.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus)
 [![Github Issues](https://img.shields.io/github/issues/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/issues)
 [![Install](https://img.shields.io/badge/Install-GreasyFork-orange.svg?longCache=true&style=for-the-badge)](#installation)
+[![GitHub license](https://img.shields.io/github/license/DeathHackz/PupilPathPlus.svg?style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/LICENSE)
+
 
 Description
 -----------

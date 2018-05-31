@@ -1,6 +1,5 @@
 # PupilPath Plus
 [![GitHub Release](https://img.shields.io/github/release/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
-[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/commits/master)
 [![Status](https://img.shields.io/badge/Status-Stable-green.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus)
 [![Github Issues](https://img.shields.io/github/issues/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/issues)
 [![Install](https://img.shields.io/badge/Install-GreasyFork-orange.svg?longCache=true&style=for-the-badge)](#installation)

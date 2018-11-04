@@ -10,9 +10,10 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js
 // @icon          https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
 // @icon64        https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
-// @version       3.1
+// @version       3.2
 // @description   This script calculates and converts your average, it also has visual grade changer
 // @author        DeathHackz
 // @match         https://*.pupilpath.skedula.com/*
 // @grant         GM_xmlhttpRequest
+// @run-at        document-body
 // ==/UserScript==

@@ -1,3 +1,7 @@
+## Version 3.2 (Nov 4, 2018):
+
+* Fixed grade calculation bug.
+
 ## Version 3.1 (May 28, 2018):
 
 * New Update Checker.

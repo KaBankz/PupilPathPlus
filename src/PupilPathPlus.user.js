@@ -10,15 +10,16 @@
 // @require       https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js
 // @icon          https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
 // @icon64        https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
-// @version       3.1
+// @version       3.2
 // @description   This script calculates and converts your average, it also has visual grade changer
 // @author        DeathHackz
 // @match         https://*.pupilpath.skedula.com/*
 // @grant         GM_xmlhttpRequest
+// @run-at        document-body
 // ==/UserScript==
 
 "use strict";
-var version = "3.1";
+var version = "3.2";
 
 $("head").append(
   '<link ' +
@@ -131,63 +132,63 @@ function getAverage() {
     var count = 0;
     for (var i = 0; i < links.length; i++) {
       var str = links[i].innerText;
-      One = str.split('MP1:  ')[1];
+      One = str.split('MP1: ')[1];
       One = parseFloat(One);
       One = One || 0;
       if (One === 0) {} else {
         num += parseFloat(One);
         count++;
       }
-      Two = str.split('MP2:  ')[1];
+      Two = str.split('MP2: ')[1];
       Two = parseFloat(Two);
       Two = Two || 0;
       if (Two === 0) {} else {
         num += parseFloat(Two);
         count++;
       }
-      Three = str.split('MP3:  ')[1];
+      Three = str.split('MP3: ')[1];
       Three = parseFloat(Three);
       Three = Three || 0;
       if (Three === 0) {} else {
         num += parseFloat(Three);
         count++;
       }
-      Four = str.split('MP4:  ')[1];
+      Four = str.split('MP4: ')[1];
       Four = parseFloat(Four);
       Four = Four || 0;
       if (Four === 0) {} else {
         num += parseFloat(Four);
         count++;
       }
-      Five = str.split('MP5:  ')[1];
+      Five = str.split('MP5: ')[1];
       Five = parseFloat(Five);
       Five = Five || 0;
       if (Five === 0) {} else {
         num += parseFloat(Five);
         count++;
       }
-      Six = str.split('MP6:  ')[1];
+      Six = str.split('MP6: ')[1];
       Six = parseFloat(Six);
       Six = Six || 0;
       if (Six === 0) {} else {
         num += parseFloat(Six);
         count++;
       }
-      Seven = str.split('MP7:  ')[1];
+      Seven = str.split('MP7: ')[1];
       Seven = parseFloat(Seven);
       Seven = Seven || 0;
       if (Seven === 0) {} else {
         num += parseFloat(Seven);
         count++;
       }
-      Eight = str.split('MP8:  ')[1];
+      Eight = str.split('MP8: ')[1];
       Eight = parseFloat(Eight);
       Eight = Eight || 0;
       if (Eight === 0) {} else {
         num += parseFloat(Eight);
         count++;
       }
-      Nine = str.split('MP9:  ')[1];
+      Nine = str.split('MP9: ')[1];
       Nine = parseFloat(Nine);
       Nine = Nine || 0;
       if (Nine === 0) {} else {
@@ -351,12 +352,12 @@ if ($('#progress-card').length === 1) {
     var mopo = document.getElementById(dopid).cells[4].children[0];
     mopo.setAttribute("id", jid);
     var cholo = document.getElementById(dopid).cells[4].children[0].innerText.substring(1);
-    $('#modifygrades').append(popo + "<input style='margin:5px;' id=" + ioid + " type='number' value=" + cholo + " min='0' max='100'></input><br />");
+    $('#modifygrades').append(popo + "<input style='margin:5px;' id=" + ioid + " type='number' step='.01' value=" + cholo + " min='0' max='110'></input><br />");
     aclass.push(dop);
 
   }
 
-  $('#modifygrades').append("<a class='btn btn-secondary' style='margin-right:5px;' onClick=$.fancybox.close()>Close</a><a class='btn btn-danger' id='rstbtn' style='margin-right:5px;'>Reset</a><a class='btn btn-warning' id='clearbtn' style='margin-right:5px;'>Clear</a><a style='margin-right:5px;' id='setbtn' class='btn btn-success'>Set</a><a style='float:right;' id='savebtn' class='btn btn-danger'>Save</a>");
+  $('#modifygrades').append("<a class='btn btn-danger' id='rstbtn' style='margin-right:5px;'>Reset</a><a class='btn btn-warning' id='clearbtn' style='margin-right:5px;'>Clear</a><a style='margin-right:5px;' id='setbtn' class='btn btn-success'>Set</a><a style='float:right;margin-left:50px;' id='savebtn' class='btn btn-danger'>Save</a>");
 }
 
 function setsavedgrades() {

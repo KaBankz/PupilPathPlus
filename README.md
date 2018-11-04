@@ -67,7 +67,7 @@ External Libraries
 
 Credits
 -------
-Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83733fb1d4264a3785b14249d1) code, written by [cqfllp](https://github.com/cqfllp).
+Average Calculation is done using my own modified version of [this](https://gist.github.com/cqfllp/1c2ccc83733fb1d4264a3785b14249d1) code, written by [cqfllp](https://github.com/cqfllp).
 
 ```javascript
   var links=document.querySelectorAll('tr[style="cursor: pointer"]');
@@ -91,6 +91,8 @@ Average Calculation is done using [this](https://gist.github.com/cqfllp/1c2ccc83
 
 Changelog
 ---------
+* Version 3.2 (Nov 4, 2018):
+    - Fixed grade calculation bug.
 * Version 3.1 (May 28, 2018):
     - New Update Checker.
 * Version 3.0 (May 27, 2018):

@@ -19,10 +19,10 @@ Features
 
 If you do not want to install this userscript, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
 
-1) Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link
-2) Then highlight everything (ctrl + a or cmd + a)
-3) Then drag it all with you mouse up to your bookmarks bar
-4) Done!
+1. Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link
+2. Then highlight everything (ctrl + a or cmd + a)
+3. Then drag it all with you mouse up to your bookmarks bar
+4. Done!
 
 Now all you have to do is go to pupilpath and click on the new bookmark you just made and you should see your average displayed above your grades.
 This only works on PupilPath!!

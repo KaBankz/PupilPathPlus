@@ -1,45 +1,50 @@
 # PupilPath Plus
 [![GitHub Release](https://img.shields.io/github/release/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
-[![Status](https://img.shields.io/badge/Status-Stable-green.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus)
-[![Github Issues](https://img.shields.io/github/issues/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/issues)
-[![Install](https://img.shields.io/badge/Install-GreasyFork-orange.svg?longCache=true&style=for-the-badge)](#installation)
+[![GitHub Issues](https://img.shields.io/github/issues/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/issues)
 [![GitHub license](https://img.shields.io/github/license/DeathHackz/PupilPathPlus.svg?style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/LICENSE)
-
+[![Install](https://img.shields.io/badge/Install-red.svg?longCache=true&style=for-the-badge)](#installation)
 
 Description
 -----------
-This UserScript calculates your average and shows it on the site, it also converts your percent average to letter, and 4.0 Scale; Also includes a visual grade changer.
+This UserScript calculates your cumulative average, allows you to convert your percent average to a letter grade, and also calculates your GPA. A visual grade changer is also included.
 
 Features
 --------
 * Average Calculator
 * Average Converter
+* Grade Converter
+* GPA Calculator
 * Grade Changer ***(visual only)***
+* Bookmarklet Available
+
+If you do not want to install this userscript, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
+
+Just drag this link up to your bookmarks bar
+
+<a href="javascript:(function(){'use strict';if(!('https://pupilpath.skedula.com'===window.location.origin))alert('This Only Works On PupilPath');else if(null!==document.getElementById('progress-card')){document.getElementsByClassName('notification information')[0].insertAdjacentHTML('afterbegin',`<span id='averageContainer'><a id='averageParent' style='color: #585b66; position: static; float: right; padding-top: 10px; padding-right: 10px;'>Total Average: <img id='averageIcon' /> <span id='totalAverage'></span></a></span>`);const a=document.querySelectorAll('table#progress-card > tbody > tr > td > span'),b=[];a.forEach(a=>{b.push(parseFloat(a.innerText))});const c=b.reduce((c,a)=>c+a),d=b.length,e=Math.round(100*(c/d))/100;let f,g,h;90<=e?(f='/img/ico/star.png',g='#0087FF',h='Honors'):80<=e?(f='/img/ico/tick.png',g='#1FBA24',h='Passing'):65<=e?(f='/img/ico/error.png',g='#AA9901',h='Borderline'):64>=e&&(f='/img/ico/exclamation.png',g='#CF1920',h='Failing'),document.getElementById('totalAverage').style.color=g,document.getElementById('averageIcon').src=f,document.getElementById('totalAverage').dataset.gtype=h,document.getElementById('totalAverage').innerText=`${e}%`}})();
+"><b>DRAG ME</b></a>
+
+This only works on PupilPath!!
+Now all you have to do is go to pupilpath and click on the new bookmark you just made and you should see your average displayed above your grades.
+
+**NOTE**: The grade changer button is found in your userscript managers menu (example below)
 
 Screenshots
 -----------
 > **Total Average**
-![Total Average](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Total_Average.png?raw=true "Total Average")
+![Total Average](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/average.png?raw=true "Total Average")
 
 > **Average Converter**
-![Average Converter](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Average_Conversion.png?raw=true "Average Converter")
+![Average Converter](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/average_conversion.png?raw=true "Average Converter")
 
-> **Grade Changer & Info Buttons**
-![Grade Changer & Info Buttons](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Buttons.png?raw=true "Grade Changer & Info Buttons")
+> **Grade Changer Button**
+![Grade Changer Button](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/grade_changer_button.png?raw=true "Grade Changer Button")
 
-> **Grade Changer Interface**
-![Grade Changer Interface](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Grade_Changer.png?raw=true "Grade Changer Interface")
+> **Grade Changer**
+![Grade Changer](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/grade_changer.png?raw=true "Grade Changer")
 
-> **Changed Grades**
-![Changed Grades](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Changed_Grades.png?raw=true "Changed Grades")
-
-> **Script Info Popup**
-![Script Info Popup](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Info_Popup.png?raw=true "Script Info Popup")
-
-> **Update Changelog**
-![Update Changelog](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/Update_Changelog.png?raw=true "Update Changelog")
-
-<a name="installation"></a>
+> **Multiple Grade Types**
+![Multiple Grade Types](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/multi_grade_views.png?raw=true "Multiple Grade Types")
 
 Installation
 ------------
@@ -47,76 +52,51 @@ You **must** have a userscript manager installed such as
 
 * [Tampermonkey](https://tampermonkey.net) (Recomended)
 * [Violentmonkey](https://violentmonkey.github.io/)
-* [Greasemonkey](https://www.greasespot.net) (FireFox Only)
+* [Greasemonkey](https://www.greasespot.net)
 
-Then just click the link below and click install
+Then just click on one of the links below and install
 
 * [Greasy Fork](https://greasyfork.org/en/scripts/368390)
+* [OpenUserJs](https://openuserjs.org/###)
+
+#### Userscript manager compatibility guide
+
+|         | Tamper Monkey | Violent Monkey | Grease Monkey |
+|:-------:|:------------:|:-------------:|:------------:|
+|  Chrome |      YES     |      YES      |      NO      |
+| FireFox |      YES     |      YES      |      YES     |
+|   Edge  |      YES     |       NO      |      NO      |
+|  Safari |      YES     |       NO      |      NO      |
+|  Opera  |      YES     |       NO      |      NO      |
+
+([Source](https://openuserjs.org/about/Userscript-Beginners-HOWTO))
+
+Check [HERE](https://openuserjs.org/about/Userscript-Beginners-HOWTO) for a more detailed compatibility guide.
 
 Permissions
 -----------
-* **Access to external libraries** *(Needed for the script to run)*
-* **Access to https pages** *(Needed  to access PupilPath)*
-* **Access to internet** *(Needed to check for script updates)*
+* **NONE :)**
 
 External Libraries
 ------------------
-* [jQuery v1.5.1](https://blog.jquery.com/2011/02/24/jquery-151-released)
-* [Toastr](https://codeseven.github.io/toastr)
-* [Fancybox](http://fancybox.net)
-
-Credits
--------
-Average Calculation is done using my own modified version of [this](https://gist.github.com/cqfllp/1c2ccc83733fb1d4264a3785b14249d1) code, written by [cqfllp](https://github.com/cqfllp).
-
-```javascript
-  var links=document.querySelectorAll('tr[style="cursor: pointer"]');
-  var text="";
-  var num=0;
-  var count=0;
-  for(var i=0;i<links.length;i++){
-    var str = links[i].innerText;
-    text=str.split('MP1:  ')[1];
-    text=parseFloat(text);
-    text = text || 0;
-    if (text==0){
-    }else{
-    num+=parseFloat(text);
-    count++;
-    }
-  }
-  var avg=num/count;
-  alert("Total Average: "+Math.ceil(avg*100)/100);
-```
+* **NONE :)**
 
 Changelog
 ---------
-* Version 3.2 (Nov 4, 2018):
-    - Fixed grade calculation bug.
-* Version 3.1 (May 28, 2018):
-    - New Update Checker.
-* Version 3.0 (May 27, 2018):
-    - New Icon.
-    - Added Toastr.js.
-    - Added Fancybox.js.
-    - Added Average Converter.
-    - Added info popup.
-    - New grade changer design.
-    - New update changelog toast.
-* Version 2.3 (May 14, 2018):
-    - Added styles to grade changer.
-    - Fixed minor bugs.
-* Version 2.2 (May 14, 2018):
-    - Fixed major jQuery compatibility bug.
-* Version 2.1 (May 13, 2018):
-    - Removed useless code.
-    - Fixed minor bugs.
-* Version 2.0 (May 12, 2018):
-    - Added in visual grade changer.
-    - Fixed minor bugs.
-* Version 1.3 (May 11, 2018):
-    - Added support for more Marking Periods.
-* Version 1.2 (May 9, 2018):
-    - Added in jQuery.
-* Version 1.0 (May 4, 2018):
-	- Created userscript.
+* Version 4.0.0 (March 12, 2019):
+  - Complete Re-Write Of All Code.
+  - Removed All External Libraries.
+  - Removed All Unnecessary Permissions.
+  - Removed All Unnecessary Code.
+  - Removed All Unnecessary Features.
+  - Improved Speed Drastically.
+  - Converted Code To Use ES6/ECMAScript 2015 Standards.
+  - Documented Code With Comments.
+  - Beautified Code.
+  - Improved Grade Changer.
+  - New Icon.
+  - New Bookmarklet Available.
+  - New Script Homepage.
+  - New Support For Multiple Grade Types.
+
+[View Full Changelog](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)

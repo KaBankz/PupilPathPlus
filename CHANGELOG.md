@@ -1,6 +1,23 @@
+## Version 4.0.0 (March 12, 2019):
+
+* Complete Re-Write Of All Code.
+* Removed All External Libraries.
+* Removed All Unnecessary Permissions.
+* Removed All Unnecessary Code.
+* Removed All Unnecessary Features.
+* Improved Speed Drastically.
+* Converted Code To Use ES6/ECMAScript 2015 Standards.
+* Documented Code With Comments.
+* Beautified Code.
+* Improved Grade Changer.
+* New Icon.
+* New Bookmarklet Available.
+* New Script Homepage.
+* New Support For Multiple Grade Types.
+
 ## Version 3.2 (Nov 4, 2018):
 
-* Fixed grade calculation bug.
+* Fixed Grade Calculation Bug.
 
 ## Version 3.1 (May 28, 2018):
 
@@ -12,37 +29,37 @@
 * Added Toastr.js.
 * Added Fancybox.js.
 * Added Average Converter.
-* Added info popup.
-* New grade changer design.
-* New update changelog toast.
+* Added Info Popup.
+* New Grade Changer Design.
+* New Update Changelog Toast.
 
 ## Version 2.3 (May 14, 2018):
 
-* Added styles to grade changer.
-* Fixed minor bugs.
+* Added Styles To Grade Changer.
+* Fixed Minor Bugs.
 
 ## Version 2.2 (May 14, 2018):
 
-* Fixed major jQuery compatibility bug.
+* Fixed Major jQuery Compatibility Bug.
 
 ## Version 2.1 (May 13, 2018):
 
-* Removed useless code.
-* Fixed minor bugs.
+* Removed Useless Code.
+* Fixed Minor Bugs.
 
 ## Version 2.0 (May 12, 2018):
 
-* Added in visual grade changer.
-* Fixed minor bugs.
+* Added In Visual Grade Changer.
+* Fixed Minor Bugs.
 
 ## Version 1.3 (May 11, 2018):
 
-* Added support for more Marking Periods.
+* Added Support For More Marking Periods.
 
 ## Version 1.2 (May 9, 2018):
 
-* Added in jQuery.
+* Added In jQuery.
 
 ## Version 1.0 (May 4, 2018):
 
-* Created userscript.
+* Created Userscript.

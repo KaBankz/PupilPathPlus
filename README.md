@@ -19,13 +19,14 @@ Features
 
 If you do not want to install this userscript, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
 
-Just drag this link up to your bookmarks bar
+1) Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link
+2) Then highlight everything (ctrl + a or cmd + a)
+3) Then drag it all with you mouse up to your bookmarks bar
+4) Done!
 
-<a href="javascript:(function(){'use strict';if(!('https://pupilpath.skedula.com'===window.location.origin))alert('This Only Works On PupilPath');else if(null!==document.getElementById('progress-card')){document.getElementsByClassName('notification information')[0].insertAdjacentHTML('afterbegin',`<span id='averageContainer'><a id='averageParent' style='color: #585b66; position: static; float: right; padding-top: 10px; padding-right: 10px;'>Total Average: <img id='averageIcon' /> <span id='totalAverage'></span></a></span>`);const a=document.querySelectorAll('table#progress-card > tbody > tr > td > span'),b=[];a.forEach(a=>{b.push(parseFloat(a.innerText))});const c=b.reduce((c,a)=>c+a),d=b.length,e=Math.round(100*(c/d))/100;let f,g,h;90<=e?(f='/img/ico/star.png',g='#0087FF',h='Honors'):80<=e?(f='/img/ico/tick.png',g='#1FBA24',h='Passing'):65<=e?(f='/img/ico/error.png',g='#AA9901',h='Borderline'):64>=e&&(f='/img/ico/exclamation.png',g='#CF1920',h='Failing'),document.getElementById('totalAverage').style.color=g,document.getElementById('averageIcon').src=f,document.getElementById('totalAverage').dataset.gtype=h,document.getElementById('totalAverage').innerText=`${e}%`}})();
-"><b>DRAG ME</b></a>
-
-This only works on PupilPath!!
 Now all you have to do is go to pupilpath and click on the new bookmark you just made and you should see your average displayed above your grades.
+This only works on PupilPath!!
+
 
 **NOTE**: The grade changer button is found in your userscript managers menu (example below)
 

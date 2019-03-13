@@ -10,7 +10,6 @@
 // @homepageURL   https://deathhackz.github.io/PupilPathPlus
 // @supportURL    https://github.com/DeathHackz/PupilPathPlus/issues
 // @icon          https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
-// @icon64        https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
 // @updateURL     https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.meta.js
 // @downloadURL   https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js
 // @run-at        document-body

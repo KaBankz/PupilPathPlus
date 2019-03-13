@@ -1,497 +1,921 @@
 // ==UserScript==
 // @name          PupilPath Plus
-// @namespace     https://github.com/DeathHackz
-// @homepageURL   https://github.com/DeathHackz/PupilPathPlus
+// @namespace     https://greasyfork.org/en/scripts/368390
+// @version       4.0.0
+// @description   Calculate Your PupilPath Cumulative Average & More
+// @match         https://*.pupilpath.skedula.com/*
+// @author        DeathHackz
+// @copyright     2019 DeathHackz
+// @license       MIT
+// @homepageURL   https://deathhackz.github.io/PupilPathPlus
 // @supportURL    https://github.com/DeathHackz/PupilPathPlus/issues
-// @updateURL     https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.meta.js
-// @downloadURL   https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js
-// @require       https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js
-// @require       https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js
 // @icon          https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
 // @icon64        https://github.com/DeathHackz/PupilPathPlus/raw/master/icon.png
-// @version       3.2
-// @description   This script calculates and converts your average, it also has visual grade changer
-// @author        DeathHackz
-// @match         https://*.pupilpath.skedula.com/*
-// @grant         GM_xmlhttpRequest
+// @updateURL     https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.meta.js
+// @downloadURL   https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js
 // @run-at        document-body
+// @grant         GM_registerMenuCommand
+/* global jQuery */
 // ==/UserScript==
 
+/*
+=================================================================================================================================
+PupilPath, and all related icons/images/assets, and names belong to IO Education
+I am NOT affiliated with PupilPath or IO Education by no means, neither is this script
+=================================================================================================================================
+MIT License
+
+Copyright (c) 2019 DeathHackz
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+=================================================================================================================================
+Supported Userscript Extensions:
+* Tampermonkey (recommended)
+* Violentmonkey
+* Greasmonkey (firefox only)
+=================================================================================================================================
+PupilPath Default Libraries
+* jQuery v1.5.1
+* jQuery-UI v1.8.11 CUSTOM
+* jQuery FaceBox v1.2
+* jQuery Timepicker Addon v0.9.3
+=================================================================================================================================
+*/
+
+// Make Entire Script Run In Strict Mode
 "use strict";
-var version = "3.2";
 
-$("head").append(
-  '<link ' +
-  'href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" ' +
-  'rel="stylesheet" type="text/css">'
-);
+// Add Menu Items To UserScript Manager
+GM_registerMenuCommand("Visit Homepage", () => {
+  window.open("https://deathhackz.github.io/PupilPathPlus");
+});
+GM_registerMenuCommand("Check For Updates", () => {
+  window.open("https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js");
+});
 
-$("head").append(
-  '<link ' +
-  'href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" ' +
-  'rel="stylesheet" type="text/css">'
-);
+// Define All Functions Before Conditional Statement
 
-var url = "https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.meta.js";
-$.get(url, function (data) {
-  if (data.indexOf("// @version       " + version) != -1) {} else {
-    var pk = data.split("\n");
-    var results = pk.filter(function (value) {
-      return value.indexOf("// @version") >= 0;
-    });
-    var ok = results[0].split(" ");
-    var hh = ok.length - 1;
-    var newversion = ok[hh];
-    if (newversion > version) {
-      toastr.options = {
-        closeButton: true,
-        debug: false,
-        newestOnTop: false,
-        progressBar: true,
-        positionClass: "toast-top-right",
-        preventDuplicates: true,
-        onclick: function () {
-          window.open(
-            "https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js"
-          );
-        },
-        showDuration: "300",
-        hideDuration: "1000",
-        timeOut: 0,
-        extendedTimeOut: 0,
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut",
-        tapToDismiss: false
-      };
-      toastr.info("Click Here to Update Now!", "PupilPath Plus v" + newversion + " has been released!");
+// Function Accepts An Array And Returns The Average
+function calculateAverage(grades) {
+  // Adds Up All The Values From The Array
+  const gradesTotal = grades.reduce((a, b) => a + b);
+  const totalGrades = grades.length;
+  const average = gradesTotal / totalGrades;
+  return average;
+}
+
+// Function To See If Two Array's Are Identical (Have The Same Values)
+function compareArrays(a, b) {
+  // Check If Array's Have The Same Length
+  if (a.length !== b.length) {
+    return false;
+  }
+  // Check To See If All The Values Are The Same
+  for (let i = a.length; i--;) {
+    if (a[i] !== b[i]) {
+      return false;
     }
   }
-}, "text");
-
-if (localStorage.length === 0) {
-  localStorage.setItem('PupilPath Plus Version', "v" + version);
+  return true;
 }
 
-if (localStorage.getItem("PupilPath Plus Version") !== "v" + version) {
-  toastr.options = {
-    closeButton: true,
-    debug: false,
-    newestOnTop: false,
-    progressBar: true,
-    positionClass: "toast-top-right",
-    preventDuplicates: true,
-    onclick: function () {
-      window.open(
-        "https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md"
-      );
-    },
-    showDuration: "300",
-    hideDuration: "1000",
-    timeOut: 0,
-    extendedTimeOut: 0,
-    showEasing: "swing",
-    hideEasing: "linear",
-    showMethod: "fadeIn",
-    hideMethod: "fadeOut",
-    tapToDismiss: false
-  };
-  toastr.info("View Changelog", "PupilPath Plus Updated to v" + version);
-  localStorage.setItem('PupilPath Plus Version', "v" + version);
+// Function To See If All Values In An Array Are Between 0 - 110
+function isValidGrades(array) {
+  if (array >= 0 && array <= 110) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function getAverage() {
-  if ($('#progress-card').length === 1) {
-
-    if ($('#totalaverage').length === 0) {
-      $('.information').prepend("<a href='#ginfo' id='averagep' style='color: #585b66;position: static;float: right;padding-top: 10px;padding-right: 10px;'>Total Average: <img id='avgimg' src='' /><span id='totalaverage'></span></a>");
-    }
-    $("a#averagep").fancybox({
-      'type': 'inline',
-      'autoScale': true,
-      'autoDimensions': true,
-      'overlayOpacity': 0,
-      'transitionIn': 'elastic',
-      'transitionOut': 'elastic',
-      'padding': 20,
-      'centerOnScroll': true
+// Function To Change Grade View
+function setGradeView(view) {
+  // Define All Needed DOM Elements
+  const numberGrades = document.querySelectorAll("span.numberGrade");
+  const letterGrades = document.querySelectorAll("span.letterGrade");
+  const gpaGrades = document.querySelectorAll("span.gpaGrade");
+  const numAverage = document.querySelector("span#totalAverage.numberGrade");
+  const letterAverage = document.querySelector("span#totalAverage.letterGrade");
+  const gpaAverage = document.querySelector("span#totalAverage.gpaGrade");
+  // Use Conditionals To Show Selected Grade Type & Hide The Others
+  if (view === "number") {
+    localStorage.setItem("DefaultGradeView", "number");
+    numAverage.style.display = "initial";
+    letterAverage.style.display = "none";
+    gpaAverage.style.display = "none";
+    numberGrades.forEach(e => {
+      e.style.display = "initial";
     });
-    var links = document.querySelectorAll('tr[style="cursor: pointer"]');
-    var One = "";
-    var Two = "";
-    var Three = "";
-    var Four = "";
-    var Five = "";
-    var Six = "";
-    var Seven = "";
-    var Eight = "";
-    var Nine = "";
-    var num = 0;
-    var count = 0;
-    for (var i = 0; i < links.length; i++) {
-      var str = links[i].innerText;
-      One = str.split('MP1: ')[1];
-      One = parseFloat(One);
-      One = One || 0;
-      if (One === 0) {} else {
-        num += parseFloat(One);
-        count++;
-      }
-      Two = str.split('MP2: ')[1];
-      Two = parseFloat(Two);
-      Two = Two || 0;
-      if (Two === 0) {} else {
-        num += parseFloat(Two);
-        count++;
-      }
-      Three = str.split('MP3: ')[1];
-      Three = parseFloat(Three);
-      Three = Three || 0;
-      if (Three === 0) {} else {
-        num += parseFloat(Three);
-        count++;
-      }
-      Four = str.split('MP4: ')[1];
-      Four = parseFloat(Four);
-      Four = Four || 0;
-      if (Four === 0) {} else {
-        num += parseFloat(Four);
-        count++;
-      }
-      Five = str.split('MP5: ')[1];
-      Five = parseFloat(Five);
-      Five = Five || 0;
-      if (Five === 0) {} else {
-        num += parseFloat(Five);
-        count++;
-      }
-      Six = str.split('MP6: ')[1];
-      Six = parseFloat(Six);
-      Six = Six || 0;
-      if (Six === 0) {} else {
-        num += parseFloat(Six);
-        count++;
-      }
-      Seven = str.split('MP7: ')[1];
-      Seven = parseFloat(Seven);
-      Seven = Seven || 0;
-      if (Seven === 0) {} else {
-        num += parseFloat(Seven);
-        count++;
-      }
-      Eight = str.split('MP8: ')[1];
-      Eight = parseFloat(Eight);
-      Eight = Eight || 0;
-      if (Eight === 0) {} else {
-        num += parseFloat(Eight);
-        count++;
-      }
-      Nine = str.split('MP9: ')[1];
-      Nine = parseFloat(Nine);
-      Nine = Nine || 0;
-      if (Nine === 0) {} else {
-        num += parseFloat(Nine);
-        count++;
-      }
-    }
-    var avg = num / count;
-    var finalavg = Math.ceil(avg * 100) / 100;
-    var avgimg;
-    var fcolor;
-    var avgfix = Number(finalavg);
+    letterGrades.forEach(e => {
+      e.style.display = "none";
+    });
+    gpaGrades.forEach(e => {
+      e.style.display = "none";
+    });
+  }
+  if (view === "letter") {
+    localStorage.setItem("DefaultGradeView", "letter");
+    numAverage.style.display = "none";
+    letterAverage.style.display = "initial";
+    gpaAverage.style.display = "none";
+    numberGrades.forEach(e => {
+      e.style.display = "none";
+    });
+    letterGrades.forEach(e => {
+      e.style.display = "initial";
+    });
+    gpaGrades.forEach(e => {
+      e.style.display = "none";
+    });
+  }
+  if (view === "gpa") {
+    localStorage.setItem("DefaultGradeView", "gpa");
+    numAverage.style.display = "none";
+    letterAverage.style.display = "none";
+    gpaAverage.style.display = "initial";
+    numberGrades.forEach(e => {
+      e.style.display = "none";
+    });
+    letterGrades.forEach(e => {
+      e.style.display = "none";
+    });
+    gpaGrades.forEach(e => {
+      e.style.display = "initial";
+    });
+  }
+}
 
-    if (avgfix >= 90) {
-      avgimg = "/img/ico/star.png";
-      fcolor = "#0087FF";
-    } else {
-      if (avgfix >= 80) {
-        avgimg = "/img/ico/tick.png";
-        fcolor = "#1FBA24";
-      } else {
-        if (avgfix >= 65) {
-          avgimg = "/img/ico/error.png";
-          fcolor = "#AA9901";
-        } else {
-          if (avgfix <= 64) {
-            avgimg = "/img/ico/exclamation.png";
-            fcolor = "#CF1920";
-          }
-        }
-      }
+// Puts The Inputted Grades Array Through Series Of Conditionals And Returns Appropriate Data For Each Grade
+function convertGrades(grade) {
+  // All The Data For Each Grade Is Pushed Into This Array
+  const finalData = [];
+  // Loops Through Entire Inputted Array
+  grade.forEach(a => {
+    // This Must Be A Whole Number Or An Error May Occur If The Decimal Is In Between The Ranges Defined Below
+    const e = Math.floor(a);
+    // Defining All Necessary Variables
+    let letterGrade;
+    let gpaGrade;
+    let gradeIcon;
+    let gradeColor;
+    let gradeType;
+    // Conditionals To Find Appropriate Values Based On Grade
+    if (e > 100) {
+      letterGrade = "A++";
+      gpaGrade = 4.0;
+      gradeIcon = "/img/ico/star.png";
+      gradeColor = "#0087FF";
+      gradeType = "Honors";
     }
-    var lettergrade;
-    var collegegrade;
-    if (avgfix >= 97) {
-      lettergrade = "A+";
-      collegegrade = "4.0";
-    } else {
-      if (avgfix >= 93) {
-        lettergrade = "A";
-        collegegrade = "4.0";
-      } else {
-        if (avgfix >= 90) {
-          lettergrade = "A-";
-          collegegrade = "3.7";
+    if (e >= 97 && e <= 100) {
+      letterGrade = "A+";
+      gpaGrade = 4.0;
+      gradeIcon = "/img/ico/star.png";
+      gradeColor = "#0087FF";
+      gradeType = "Honors";
+    }
+    if (e >= 93 && e <= 96) {
+      letterGrade = "A";
+      gpaGrade = 4.0;
+      gradeIcon = "/img/ico/star.png";
+      gradeColor = "#0087FF";
+      gradeType = "Honors";
+    }
+    if (e >= 90 && e <= 92) {
+      letterGrade = "A-";
+      gpaGrade = 3.67;
+      gradeIcon = "/img/ico/star.png";
+      gradeColor = "#0087FF";
+      gradeType = "Honors";
+    }
+    if (e >= 87 && e <= 89) {
+      letterGrade = "B+";
+      gpaGrade = 3.33;
+      gradeIcon = "/img/ico/tick.png";
+      gradeColor = "#1FBA24";
+      gradeType = "Passing";
+    }
+    if (e >= 83 && e <= 86) {
+      letterGrade = "B";
+      gpaGrade = 3.00;
+      gradeIcon = "/img/ico/tick.png";
+      gradeColor = "#1FBA24";
+      gradeType = "Passing";
+    }
+    if (e >= 80 && e <= 82) {
+      letterGrade = "B-";
+      gpaGrade = 2.67;
+      gradeIcon = "/img/ico/tick.png";
+      gradeColor = "#1FBA24";
+      gradeType = "Passing";
+    }
+    if (e >= 77 && e <= 79) {
+      letterGrade = "C+";
+      gpaGrade = 2.33;
+      gradeIcon = "/img/ico/error.png";
+      gradeColor = "#AA9901";
+      gradeType = "Borderline";
+    }
+    if (e >= 73 && e <= 76) {
+      letterGrade = "C";
+      gpaGrade = 2.00;
+      gradeIcon = "/img/ico/error.png";
+      gradeColor = "#AA9901";
+      gradeType = "Borderline";
+    }
+    if (e >= 70 && e <= 72) {
+      letterGrade = "C-";
+      gpaGrade = 1.67;
+      gradeIcon = "/img/ico/error.png";
+      gradeColor = "#AA9901";
+      gradeType = "Borderline";
+    }
+    if (e >= 67 && e <= 69) {
+      letterGrade = "D+";
+      gpaGrade = 1.33;
+      gradeIcon = "/img/ico/error.png";
+      gradeColor = "#AA9901";
+      gradeType = "Borderline";
+    }
+    if (e >= 63 && e <= 66) {
+      letterGrade = "D";
+      gpaGrade = 1.00;
+      gradeIcon = "/img/ico/exclamation.png";
+      gradeColor = "#CF1920";
+      gradeType = "Failing";
+    }
+    if (e >= 60 && e <= 62) {
+      letterGrade = "D-";
+      gpaGrade = 0.67;
+      gradeIcon = "/img/ico/exclamation.png";
+      gradeColor = "#CF1920";
+      gradeType = "Failing";
+    }
+    if (e < 60) {
+      letterGrade = "F";
+      gpaGrade = 0.00;
+      gradeIcon = "/img/ico/exclamation.png";
+      gradeColor = "#CF1920";
+      gradeType = "Failing";
+    }
+    // Combines All Data Per Grade Into An Object
+    const gradeData = {
+      "Number_Grade": a,
+      "Letter_Grade": letterGrade,
+      "GPA_Grade": gpaGrade,
+      "Grade_Icon": gradeIcon,
+      "Grade_Color": gradeColor,
+      "Grade_Type": gradeType
+    };
+    // Pushes Object Into FinalData Array
+    finalData.push(gradeData);
+  });
+  return finalData;
+}
+
+// Sets The Value For The Average Element
+// Icon, Color, & Type Can Be Automatically Set
+function setAverage(average, custom) {
+  // Get Average Data By Passing Average As An Array Through ConvertGrades Function
+  const gradeData = convertGrades([average]);
+  // Define All Necessary Items From GradeData
+  const gradeColor = gradeData[0].Grade_Color;
+  const gradeType = gradeData[0].Grade_Type;
+  const gradeIcon = gradeData[0].Grade_Icon;
+  const letterGrade = gradeData[0].Letter_Grade;
+  const gpaGrade = gradeData[0].GPA_Grade;
+  // Get Default Grade View
+  const gradeView = localStorage.getItem("DefaultGradeView");
+  // Only Show Grade View Which Is Default
+  let numView = "none";
+  let letterView = "none";
+  let gpaView = "none";
+  if (gradeView === "number") {
+    numView = "initial";
+  }
+  if (gradeView === "letter") {
+    letterView = "initial";
+  }
+  if (gradeView === "gpa") {
+    gpaView = "initial";
+  }
+  // If Custom Is True Create New Element For Custom Average
+  if (custom === true) {
+    // Remove Custom Average HTML If It Exists To Replace With New HTML
+    if (document.getElementById("customAverageParent") !== null) {
+      document.getElementById("customAverageParent").remove();
+    }
+    // Select Average Container
+    const averageContainer = document.querySelector("span#averageContainer");
+    // Hide Original Average Element
+    document.getElementById("averageParent").style.display = "none";
+    // Add In Custom Average HTML
+    averageContainer.insertAdjacentHTML("beforeend", `
+    <a id="customAverageParent" style="display: initial; color: #585b66; position: static; float: right; padding-top: 10px; padding-right: 10px; cursor: pointer">
+      Total Average:
+      <img id="customAverageIcon" src="${gradeIcon}" />
+      <span style="display: ${numView}; color: ${gradeColor};" data-gtype="${gradeType}" class="numberGrade" id="customTotalAverage">${average}%</span>
+      <span style="display: ${letterView}; color: ${gradeColor};" data-gtype="${gradeType}" class="letterGrade" id="customTotalAverage">${letterGrade}</span>
+      <span style="display: ${gpaView}; color: ${gradeColor};" data-gtype="${gradeType}" class="gpaGrade" id="customTotalAverage">${gpaGrade}</span>
+    </a>
+    `);
+  } else {
+    // Set All New Data
+    document.querySelectorAll("span#totalAverage").forEach(e => {
+        e.style.color = gradeColor;
+        e.dataset.gtype = gradeType;
+      });
+    document.getElementById("averageIcon").src = gradeIcon;
+    document.querySelector("span#totalAverage.numberGrade").innerText = `${average}%`;
+    document.querySelector("span#totalAverage.letterGrade").innerText = letterGrade;
+    document.querySelector("span#totalAverage.gpaGrade").innerText = gpaGrade;
+  }
+}
+
+// Function To Load Saved Grades
+function loadSavedGrades() {
+  // Parse The Saved Grades So It Can Be Read As An Array
+  const savedGrades = JSON.parse(localStorage.getItem("CustomGrades"));
+  // Selects All The Grade Container Elements
+  const gradeSpan = document.querySelectorAll("table#progress-card > tbody > tr > td > span");
+  // All Grades Custom Included
+  let allGrades = [];
+  for (let i = 0; i < savedGrades.length; i++) {
+    if (savedGrades[i] !== null) {
+      // Hide Original Grade
+      gradeSpan[i].style.display = "none";
+      // Get Data On Custom Grade
+      const gradeData = convertGrades([savedGrades[i]]);
+      // Define All Necessary Items From GradeData
+      const customNumberGrade = gradeData[0].Number_Grade;
+      const customLetterGrade = gradeData[0].Letter_Grade;
+      const customGpaGrade = gradeData[0].GPA_Grade;
+      const customGradeType = gradeData[0].Grade_Type;
+      const customGradeIcon = gradeData[0].Grade_Icon;
+      const customGradeColor = gradeData[0].Grade_Color;
+      // Get Default Grade View
+      const gradeView = localStorage.getItem("DefaultGradeView");
+      // Only Show Grade View Which Is Default
+      let numView = "none";
+      let letterView = "none";
+      let gpaView = "none";
+      if (gradeView === "number") {
+        numView = "initial";
+      }
+      if (gradeView === "letter") {
+        letterView = "initial";
+      }
+      if (gradeView === "gpa") {
+        gpaView = "initial";
+      }
+      // Add Custom Grade Span Below Original Grade Span
+      // Set All Custom Grades HTML
+      gradeSpan[i].insertAdjacentHTML("beforebegin", `
+      <span class="customGrade" style="display: initial">
+        <span class="numberGrade" style="display: ${numView}; color: ${customGradeColor};" data-numbergrade="${customNumberGrade}" data-lettergrade="${customLetterGrade}" data-gpagrade="${customGpaGrade}" data-gtype="${customGradeType}">
+          <img src="${customGradeIcon}"> ${customNumberGrade}
+        </span>
+        <span class="letterGrade" style="display: ${letterView}; color: ${customGradeColor}" data-numbergrade="${customNumberGrade}" data-lettergrade="${customLetterGrade}" data-gpagrade="${customGpaGrade}" data-gtype="${customGradeType}">
+          <img src="${customGradeIcon}"> ${customLetterGrade}
+        </span>
+        <span class="gpaGrade" style="display: ${gpaView}; color: ${customGradeColor}" data-numbergrade="${customNumberGrade}" data-lettergrade="${customLetterGrade}" data-gpagrade="${customGpaGrade}" data-gtype="${customGradeType}">
+          <img src="${customGradeIcon}"> ${customGpaGrade}
+        </span>
+      </span>
+      `);
+    }
+  }
+  // Selects All Visible Grade Spans
+  const visibleGradeSpans = document.querySelectorAll("table#progress-card > tbody > tr > td > span[style='display: initial'] > span.numberGrade");
+  visibleGradeSpans.forEach(e => {
+    const grade = parseFloat(e.dataset.numbergrade);
+    allGrades.push(grade);
+  });
+  // Calculate Custom Average
+  let customGradeAverage = calculateAverage(allGrades);
+  // Round Custom Average
+  customGradeAverage = Math.round(customGradeAverage * 100) / 100;
+  // Set Custom Average
+  setAverage(customGradeAverage, true);
+}
+
+// Add Menu Item To UserScript Manager
+// Grade Changer Function
+GM_registerMenuCommand("Change Grades", () => {
+  // Only Run If Progress Card Exists
+  if (document.getElementById("progress-card") !== null) {
+    // NOTE FACEBOX IS A DEFAULT LIBRARY PUPILPATH USES
+    // Setting Up Grade Changer Modal HTML
+    jQuery.facebox(`
+    <div id="gradeChanger">
+      <b>
+        <h5 id="gradesNotChanged" class="customError" style="display: none; text-align: center; padding: 5px; background-color: #f08080; border-radius: 5px;">Error: You Have Not Made Any Changes!</h5>
+        <h5 id="gradesTooHigh" class="customError" style="display: none; text-align: center; padding: 5px; background-color: #f08080; border-radius: 5px;">Error: Grades Must Be Between 0 - 110!</h5>
+        <h5 id="changedGrades" class="customWarning" style="display: none; text-align: center; padding: 5px; background-color: #f0eb80; border-radius: 5px;">Warning: Grades Have Been Changed!</h5>
+      </b>
+      <form>
+        <a class="btn btn-danger" id="resetButton" style="margin-right: 5px; margin-top: 5px;">Reset</a>
+        <a class="btn btn-warning" id="clearButton" style="margin-right: 5px; margin-top: 5px;">Clear</a>
+        <a class="btn btn-success" id="setButton" style="margin-right: 50px; margin-top: 5px;">Set</a>
+        <a class="btn btn-danger" id="saveButton" style="float: right; margin-top: 5px;">Save</a>
+      </form>
+    </div>
+    `);
+    // Set Save Button Name To Delete If Custom Grades Exist
+    if (localStorage.getItem("CustomGrades") !== null) {
+      document.getElementById("saveButton").innerText = "Delete";
+    }
+    // Gets All Class Name's And Grades Then Adds Them Into The Grade Changer Modal
+    const gradeSpan = document.querySelectorAll("table#progress-card > tbody > tr > td > span.originalGrade > span.numberGrade");
+    // Convert NodeList To Array To Reverse Order Of Elements So They Will Be In Correct Order When The HTML Is Inserted Below
+    const reversedGradeSpan = Array.from(gradeSpan).reverse();
+    // Adding The Class Name's And Grade Input HTML To The Grade Changer Modal
+    reversedGradeSpan.forEach(e => {
+      const origGrade = parseFloat(e.innerText);
+      const className = e.parentElement.parentElement.parentElement.childNodes[1].innerText.toUpperCase();
+      document.querySelector("div#gradeChanger > form").insertAdjacentHTML("afterbegin", `
+      <span>
+        <b>${className}</b>
+        <input style="margin: 5px;" class="classGrades" type="number" step="0.01" data-originalgrade="${origGrade}" value="" min="0" max="110">
+        <img class="isError" style="display: none;" src="/img/ico/exclamation.png" title="Grade Must Be Between 0-110"/>
+        <img class="isEdit" style="display: none;" src="/img/ico/pencil.png" title="This Grade Has Been Changed"/>
+      </span>
+      <br />
+      `);
+    });
+    // Selects All Inputs
+    const inputs = document.querySelectorAll("div#gradeChanger > form > span > input");
+    // Select All Visible Grades
+    const visibleGrades = document.querySelectorAll("table#progress-card > tbody > tr > td > span[style='display: initial'] > span.numberGrade");
+    for (let i = 0; i < inputs.length; i++) {
+      // Visible Grade
+      const grade = visibleGrades[i].dataset.numbergrade;
+      // Changed Grade Warning
+      const changedGrades = document.getElementById("changedGrades");
+      // If Grade Was Changed Do This
+      if (grade != inputs[i].dataset.originalgrade) {
+        // Show Edited Icon If Grade Was Changed
+        inputs[i].parentElement.lastElementChild.style.display = "initial";
+        // Show Grade Changed Warning
+        changedGrades.style.display = "block";
+      }
+      // Sets The Current Visible Grade To Fill Input
+      inputs[i].value = grade;
+    }
+    // Add CSS To Document HEAD To Remove Arrows From Number Input
+    document.getElementsByTagName("head")[0].insertAdjacentHTML("beforeend", `
+    <style>
+      input[type='number'] {
+        -moz-appearance:textfield;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+    </style>
+    `);
+    // This Is To Remove The Default 600px Width On FaceBox Element
+    document.getElementById("gradeChanger").parentElement.parentElement.style = "width: auto";
+
+    // Button Functions For Grade Changer
+
+    // Reset Button
+    document.getElementById("resetButton").addEventListener("click", () => {
+        // Define Necessary Variables
+        const inputs = document.querySelectorAll("div#gradeChanger > form > span > input");
+        const customGradeSpan = document.querySelectorAll("span.customGrade");
+        const originalGradeSpan = document.querySelectorAll("span.originalGrade");
+        const changedGrades = document.getElementById("changedGrades");
+        const customAverage = document.getElementById("customAverageParent");
+        const originalAverage = document.getElementById("averageParent");
+        // Remove Custom Average Element If It Exists
+        if (customAverage !== null) {
+          customAverage.remove();
+        }
+        // Show Original Average Element
+        originalAverage.style.display = "initial";
+        // Hide Grade Changed Warning
+        changedGrades.style.display = "none";
+        // Remove All Changed Grades Spans
+        customGradeSpan.forEach(e => {
+          e.remove();
+        });
+        // Show All Original Grades
+        originalGradeSpan.forEach(e => {
+          e.style.display = "initial";
+        });
+        // Set Each Input To Its Original Value
+        inputs.forEach(e => {
+          const origGrade = e.dataset.originalgrade;
+          e.value = origGrade;
+          // Hide Edited Icon
+          e.parentElement.lastElementChild.style.display = "none";
+          // Hide Error Icon
+          e.parentElement.children[2].style.display = "none";
+        });
+    });
+
+    // Clear Button
+    document.getElementById("clearButton").addEventListener("click", () => {
+        const inputs = document.querySelectorAll("div#gradeChanger > form > span> input");
+        inputs.forEach(e => {
+          // Set Each Input To Nothing
+          e.value = "";
+          // Hide Edited Icon
+          e.parentElement.lastElementChild.style.display = "none";
+          // Hide Error Icon
+          e.parentElement.children[2].style.display = "none";
+        });
+    });
+
+    // Set Button
+    document.getElementById("setButton").addEventListener("click", () => {
+      // Selects All The Grade Container Elements
+      const gradeSpan = document.querySelectorAll("table#progress-card > tbody > tr > td > span.originalGrade > span.numberGrade");
+      // All The Original Grades Are Pushed Into This Array
+      const allOriginalGrades = [];
+      // All Grade Changer Inputs
+      const inputs = document.querySelectorAll("div#gradeChanger > form > span> input");
+      // All Custom Grades Are Pushed Into This Array
+      const customGrades = [];
+      // Push All Original Grades Into Above Array
+      gradeSpan.forEach(e => {
+        // Make Sure To Use ParseFloat NOT ParseInt B/C ParseFloat Leaves Decimals Intact
+        allOriginalGrades.push(parseFloat(e.innerText));
+      });
+      // Get All Custom Grades From Inputs And Push To Array
+      inputs.forEach(e => {
+        const grade = parseFloat(e.value);
+        // Only Push Numbers To Array
+        if (isNaN(grade) === false) {
+          customGrades.push(grade);
         } else {
-          if (avgfix >= 87) {
-            lettergrade = "B+";
-            collegegrade = "3.3";
-          } else {
-            if (avgfix >= 83) {
-              lettergrade = "B";
-              collegegrade = "3.0";
+          customGrades.push(null);
+        }
+      });
+      // Only Continue If The Custom Grades Are Different Than The Original Grades
+      if (compareArrays(allOriginalGrades, customGrades) === false) {
+        // Check If Every Value Of CustomGrades Is Between 0 - 110 Using isValidGrades Function
+        if (customGrades.every(isValidGrades) === true) {
+          // All Of The Final Custom Grades Will Be Pushed Into This
+          const finalCustomGrades = [];
+          // Loop Through The Original & Custom Grades
+          for (let i = 0; i < allOriginalGrades.length; i++) {
+            let grade;
+            // If The Grades Are The Same Or Null Push Null
+            if (allOriginalGrades[i] === customGrades[i] || customGrades[i] === null) {
+              grade = null;
+            }
+            // If Grades Are Different Push The Custom Grade
+            if (allOriginalGrades[i] !== customGrades[i]) {
+              grade = customGrades[i];
+            }
+            // Push Grades To Array
+            finalCustomGrades.push(grade);
+          }
+          // Loop Through The Final Custom Grades
+          for (let i = 0; i < finalCustomGrades.length; i++) {
+            // If The Value Is Null Hide Edited Icon
+            // Else Show The Edited Icon
+            if (finalCustomGrades[i] !== null) {
+              inputs[i].parentElement.lastElementChild.style.display = "initial";
             } else {
-              if (avgfix >= 80) {
-                lettergrade = "B-";
-                collegegrade = "2.7";
-              } else {
-                if (avgfix >= 77) {
-                  lettergrade = "C+";
-                  collegegrade = "2.3";
-                } else {
-                  if (avgfix >= 73) {
-                    lettergrade = "C";
-                    collegegrade = "2.0";
-                  } else {
-                    if (avgfix >= 70) {
-                      lettergrade = "C-";
-                      collegegrade = "1.7";
-                    } else {
-                      if (avgfix >= 67) {
-                        lettergrade = "D+";
-                        collegegrade = "1.3";
-                      } else {
-                        if (avgfix >= 65) {
-                          lettergrade = "D";
-                          collegegrade = "1.0";
-                        } else {
-                          if (avgfix < 65) {
-                            lettergrade = "E/F";
-                            collegegrade = "0.0";
-                          } else {}
-                        }
-                      }
-                    }
-                  }
-                }
+              inputs[i].parentElement.lastElementChild.style.display = "none";
+            }
+            // Hide Error Icon
+            inputs[i].parentElement.children[2].style.display = "none";
+          }
+          // Selects All Original Grade Container Spans
+          const originalGradeSpan = document.querySelectorAll("span.originalGrade");
+          // Loop Through All Custom Grade Spans
+          for (let i = 0; i < finalCustomGrades.length; i++) {
+            const firstGradeChild = originalGradeSpan[i].parentElement.firstElementChild;
+            // Only Run On Classes With A Custom Grade
+            if (finalCustomGrades[i] !== null) {
+              const changedGrades = document.getElementById("changedGrades");
+              // Show Grade Changed Warning
+              changedGrades.style.display = "block";
+              // Remove Custom Grade Span If It Exists
+              if (firstGradeChild.className === "customGrade") {
+                firstGradeChild.remove();
               }
+              // Hide Original Grade
+              firstGradeChild.style.display = "none";
+              // Get Data On Custom Grade
+              const gradeData = convertGrades([finalCustomGrades[i]]);
+              // Define All Necessary Items From GradeData
+              const customNumberGrade = gradeData[0].Number_Grade;
+              const customLetterGrade = gradeData[0].Letter_Grade;
+              const customGpaGrade = gradeData[0].GPA_Grade;
+              const customGradeType = gradeData[0].Grade_Type;
+              const customGradeIcon = gradeData[0].Grade_Icon;
+              const customGradeColor = gradeData[0].Grade_Color;
+              // Get Default Grade View
+              const gradeView = localStorage.getItem("DefaultGradeView");
+              // Only Show Grade View Which Is Default
+              let numView = "none";
+              let letterView = "none";
+              let gpaView = "none";
+              if (gradeView === "number") {
+                numView = "initial";
+              }
+              if (gradeView === "letter") {
+                letterView = "initial";
+              }
+              if (gradeView === "gpa") {
+                gpaView = "initial";
+              }
+              // Add Custom Grade Span Below Original Grade Span
+              // Set All Custom Grades HTML
+              originalGradeSpan[i].insertAdjacentHTML("beforebegin", `
+                <span class="customGrade" style="display: initial">
+                  <span class="numberGrade" style="display: ${numView}; color: ${customGradeColor};" data-numbergrade="${customNumberGrade}" data-lettergrade="${customLetterGrade}" data-gpagrade="${customGpaGrade}" data-gtype="${customGradeType}">
+                    <img src="${customGradeIcon}"> ${customNumberGrade}
+                  </span>
+                  <span class="letterGrade" style="display: ${letterView}; color: ${customGradeColor}" data-numbergrade="${customNumberGrade}" data-lettergrade="${customLetterGrade}" data-gpagrade="${customGpaGrade}" data-gtype="${customGradeType}">
+                    <img src="${customGradeIcon}"> ${customLetterGrade}
+                  </span>
+                  <span class="gpaGrade" style="display: ${gpaView}; color: ${customGradeColor}" data-numbergrade="${customNumberGrade}" data-lettergrade="${customLetterGrade}" data-gpagrade="${customGpaGrade}" data-gtype="${customGradeType}">
+                    <img src="${customGradeIcon}"> ${customGpaGrade}
+                  </span>
+                </span>
+                `);
+              // Select All Visible Grades
+              const allVisibleGradesSpans = document.querySelectorAll("span[style='display: initial'] > span.numberGrade");
+              // Array To Hold All Visible Grades
+              const allVisibleGrades = [];
+              allVisibleGradesSpans.forEach(e => {
+                const grade = parseFloat(e.innerText);
+                // Push All Visible Grades To Array
+                allVisibleGrades.push(grade);
+              });
+              let customGradeAverage = calculateAverage(allVisibleGrades);
+              customGradeAverage = Math.round(customGradeAverage * 100) / 100;
+              setAverage(customGradeAverage, true);
             }
           }
+        } else {
+          inputs.forEach(e => {
+            if (e.value > 110 || e.value < 0) {
+              e.parentElement.children[2].style.display = "initial";
+            }
+          });
+          // Select Grades Too High Error
+          const gradesTooHigh = document.getElementById("gradesTooHigh");
+          // Show Error
+          gradesTooHigh.style.display = "block";
+          // Hide Error After 5 Seconds
+          setTimeout(() => {
+            gradesTooHigh.style.display = "none";
+          }, 5000);
         }
+      } else {
+        // Selects Changed Grades Warning
+        const changedGrades = document.getElementById("changedGrades");
+        // Hide Grade Changed Warning
+        changedGrades.style.display = "none";
+        // Selects All Grade Edited Icons
+        const editedGradeIcon = document.querySelectorAll("img.isEdit");
+        // Hides All Grade Edited Icons
+        editedGradeIcon.forEach(e => {
+          e.style.display = "none";
+        });
+        // Selects Grades Not Changed Error
+        const gradesNotChanged = document.getElementById("gradesNotChanged");
+        // Show Error
+        gradesNotChanged.style.display = "block";
+        // Hide Error After 5 Seconds
+        setTimeout(() => {
+          gradesNotChanged.style.display = "none";
+        }, 5000);
       }
-    }
+    });
 
-    if ($('#avgi').length === 0) {
-      $('body').append("<div id='avgi' style='display:none'><div id='ginfo'><h2>Average Conversion</h2><h4>Percent Grade: " + avgfix + "%</h4><h4>Letter Grade: " + lettergrade + "</h4><h4>4.0 Scale: " + collegegrade + "</h4><a target='_blank' href='https://pages.collegeboard.org/how-to-convert-gpa-4.0-scale'><p>More Info on College Board</p><a></div></div>");
-    } else {
-      $('#avgi').remove();
-      $('body').append("<div id='avgi' style='display:none'><div id='ginfo'><h2>Average Conversion</h2><h4>Percent Grade: " + avgfix + "%</h4><h4>Letter Grade: " + lettergrade + "</h4><h4>4.0 Scale: " + collegegrade + "</h4><a target='_blank' href='https://pages.collegeboard.org/how-to-convert-gpa-4.0-scale'><p>More Info on College Board</p><a></div></div>");
-    }
-    if ($('#totalaverage').length === 1) {
-      $('#totalaverage').text(" " + finalavg);
-      $('#avgimg').attr("src", avgimg);
-      document.getElementById('totalaverage').style.color = fcolor;
-    }
+    // Save Button
+    document.getElementById("saveButton").addEventListener("click", () => {
+      // Selects All The Grade Container Elements
+      const gradeSpan = document.querySelectorAll("table#progress-card > tbody > tr > td > span.originalGrade > span.numberGrade");
+      // All The Original Grades Are Pushed Into This Array
+      const allOriginalGrades = [];
+      // Push All Original Grades Into Above Array
+      gradeSpan.forEach(e => {
+        // Make Sure To Use ParseFloat NOT ParseInt B/C ParseFloat Leaves Decimals Intact
+        allOriginalGrades.push(parseFloat(e.innerText));
+      });
+      // Do Correct Action Based On Button Name
+      if (document.getElementById("saveButton").innerText === "Save") {
+        // Change Button Name After Click
+        document.getElementById("saveButton").innerText = "Delete";
+        // Selects All Grade Changer Inputs
+        const inputs = document.querySelectorAll("div#gradeChanger > form > span> input");
+        // All Custom Grades Will Be Pushed Into This
+        const customGrades = [];
+        // Put All Custom Grades In An Array
+        inputs.forEach(e => {
+          customGrades.push(parseFloat(e.value));
+        });
+        // Do This If Grades Have Changed
+        if (compareArrays(allOriginalGrades, customGrades) === false) {
+          // All Final Custom Grades Will Be Pushed Into This
+          const finalCustomGrades = [];
+          // Loop Over All Grades
+          for (let i = 0; i < allOriginalGrades.length; i++) {
+            let grade;
+            // If Grade Is Not Changed Push Null
+            if (allOriginalGrades[i] === customGrades[i]) {
+              grade = null;
+            }
+            // If Grade Is Different Push Custom Grade
+            if (allOriginalGrades[i] !== customGrades[i]) {
+              grade = customGrades[i];
+            }
+            // Push Grades To Array
+            finalCustomGrades.push(grade);
+          }
+          // NOTE THE ARRAY MUST BE A STRING TO SAVE TO LOCALSTORAGE THUS THE ARRAY IS CONVERTED TO A STRING WITH JSON.STRINGIFY
+          localStorage.setItem("CustomGrades", JSON.stringify(finalCustomGrades));
+        } else {
+          // Select Grades Not Changed Error
+          const gradesNotChanged = document.getElementById("gradesNotChanged");
+          // Show Error
+          gradesNotChanged.style.display = "block";
+          // Hide Error After 5 Seconds
+          setTimeout(() => {
+            gradesNotChanged.style.display = "none";
+          }, 5000);
+          // Change Button Name Back To "Save" B/C No Grades Have Changed
+          document.getElementById("saveButton").innerText = "Save";
+        }
+      } else if (document.getElementById("saveButton").innerText === "Delete") {
+        // Remove Custom Grades
+        localStorage.removeItem("CustomGrades");
+        // Change Button Name To "Save" After Click
+        document.getElementById("saveButton").innerText = "Save";
+      }
+    });
   }
-}
-window.onload = getAverage();
+});
 
-if ($('#sidebar').length === 1) {
-  $("<a style='position:absolute;top:20px;left:30px;' id='cred' href='#credit'>PupilPath Plus</a>").insertAfter('#CloseMenu');
-  $('body').append("<div style='display:none'><div id='credit'><h2>Info</h2><p>Thanks for using PupilPath Plus!</p><p>Please leave a review on <a target='_blank' href='https://greasyfork.org/en/scripts/368390/feedback'>Greasy Fork</a></p><a target='_blank' href='https://github.com/DeathHackz/PupilPathPlus/issues'><p>Found a bug?<p></a>Made by <a target='_blank' href='https://github.com/DeathHackz'>DeathHackz</a></p><p>View on <a target='_blank' href='https://github.com/DeathHackz/PupilPathPlus'>GitHub</a></p></div></div>");
-  $("a#cred").fancybox({
-    'type': 'inline',
-    'autoScale': true,
-    'autoDimensions': true,
-    'overlayOpacity': 0,
-    'transitionIn': 'elastic',
-    'transitionOut': 'elastic',
-    'padding': 20,
-    'centerOnScroll': true
+// Only Run If The Progress Card Exists
+if (document.getElementById("progress-card") !== null) {
+  // Creating The Average Container HTML
+  document.getElementsByClassName("notification information")[0].insertAdjacentHTML("afterbegin", `
+  <span id="averageContainer" title="Click For More Info">
+    <a id="averageParent" style="display: initial; color: #585b66; position: static; float: right; padding-top: 10px; padding-right: 10px; cursor: pointer">
+      Total Average:
+      <img id="averageIcon" />
+      <span style="display: initial;" class="numberGrade" id="totalAverage"></span>
+      <span style="display: none;" class="letterGrade" id="totalAverage"></span>
+      <span style="display: none;" class="gpaGrade" id="totalAverage"></span>
+    </a>
+  </span>
+  `);
+  // Selects All The Grade Container Elements
+  const gradeSpan = document.querySelectorAll("table#progress-card > tbody > tr > td > span");
+  // All The Original Grades Are Pushed Into This Array
+  const allOriginalGrades = [];
+  // Push All Original Grades Into Above Array
+  gradeSpan.forEach(e => {
+    // Make Sure To Use ParseFloat NOT ParseInt B/C ParseFloat Leaves Decimals Intact
+    allOriginalGrades.push(parseFloat(e.innerText));
+  });
+  // Returns The Average Of All The Original Grades, In Some Cases As A Float
+  const rawAverage = calculateAverage(allOriginalGrades);
+  // Rounds The RawAverage In Case It Is A Float To The Hundredths Place (2 After Decimal)
+  // NOTE DO NOT USE ParseFloat WITH ToFixed AS IT WILL LEAVE TRAILING ZEROS IF A WHOLE NUMBER IS PASSED
+  const average = Math.round(rawAverage * 100) / 100;
+  // Call SetAverage Function To Set The Average, With Automatic Data (Colors, Icons, etc..)
+  setAverage(average);
+  // Create Alternate Elements For Each Class Grade With Different Grading Standards
+  gradeSpan.forEach(e => {
+    // Original Grade
+    const grade = parseFloat(e.innerText);
+    // Get Data On Original Grade
+    const gradeData = convertGrades([grade]);
+    // Define All Necessary Items From GradeData
+    const gradeColor = gradeData[0].Grade_Color;
+    const numGrade = gradeData[0].Number_Grade;
+    const letterGrade = gradeData[0].Letter_Grade;
+    const gpaGrade = gradeData[0].GPA_Grade;
+    const gradeType = gradeData[0].Grade_Type;
+    const gradeIcon = gradeData[0].Grade_Icon;
+    // Create The HTML For The Alternate Elements With Correct Data
+    const numberGradeHTML = `
+    <span class="numberGrade" style="color: ${gradeColor}; display: initial;" data-numbergrade="${numGrade}" data-lettergrade="${letterGrade}" data-gpagrade="${gpaGrade}" data-gtype="${gradeType}">
+    <img src="${gradeIcon}"> ${numGrade}</span>
+    `;
+    const letterGradeHTML = `
+    <span class="letterGrade" style="display: none; color: ${gradeColor}" data-numbergrade="${numGrade}" data-lettergrade="${letterGrade}" data-gpagrade="${gpaGrade}" data-gtype="${gradeType}">
+    <img src="${gradeIcon}"> ${letterGrade}</span>
+    `;
+    const gpaGradeHTML = `
+    <span class="gpaGrade" style="display: none; color: ${gradeColor}" data-numbergrade="${numGrade}" data-lettergrade="${letterGrade}" data-gpagrade="${gpaGrade}" data-gtype="${gradeType}">
+    <img src="${gradeIcon}"> ${gpaGrade}</span>
+    `;
+    // Append The HTML Before The Original Grade Element
+    e.insertAdjacentHTML("beforebegin", `<span style="display: initial" class="originalGrade">${numberGradeHTML}${letterGradeHTML}${gpaGradeHTML}</span>`);
+    // Set The Original Grade HTML To Nothing To Remove It
+    e.outerHTML = ``;
+  });
+  // If Custom Grades Are Avaliable Run LoadSavedGrades Function
+  if (localStorage.getItem("CustomGrades") !== null) {
+    loadSavedGrades();
+  }
+  // Set Default Grade View If It Does Not Exist
+  if (localStorage.getItem("DefaultGradeView") === null) {
+    localStorage.setItem("DefaultGradeView", "number");
+  }
+  // Default Grade View
+  const gradeView = localStorage.getItem("DefaultGradeView");
+  // Change Current View To Default Grade View
+  setGradeView(gradeView);
+
+  // Detailed Average Info On Average Container Click
+  document.getElementById("averageContainer").addEventListener("click", () => {
+    // Select The Average Anchor Element
+    const averageAnchor = document.querySelectorAll("span#averageContainer > a");
+    // The Current Average
+    let visibleAverage = [];
+    averageAnchor.forEach(e => {
+      // If Element Is Visible Get Average Value
+      if (e.style.display == "initial") {
+        const average = parseFloat(e.childNodes[3].innerText.replace(/[^0-9.]/g, ""));
+        // Push Average To Array
+        visibleAverage.push(average);
+      }
+    });
+    // Get Data On Visible Average
+    const gradeData = convertGrades(visibleAverage);
+    // Define All Necessary Items From GradeData
+    const numGrade = gradeData[0].Number_Grade;
+    const letterGrade = gradeData[0].Letter_Grade;
+    const gpaGrade = gradeData[0].GPA_Grade;
+    // NOTE FACEBOX IS A DEFAULT LIBRARY PUPILPATH USES
+    // Setting Up Average Detail's Modal
+    jQuery.facebox(`
+      <div id="averageInfo">
+        <h2>Average Conversion</h2>
+        <h4>Percent Grade: ${numGrade}%</h4>
+        <h4>Letter Grade: ${letterGrade}</h4>
+        <h4>GPA: ${gpaGrade}</h4>
+        <form>
+          <label for="numberView" style="display: initial;">
+            <input id="numberView" type="radio" name="gradeType" value="number">
+            Number Grade
+          </label>
+          <label for="letterView" style="display: initial;">
+            <input id="letterView" type="radio" name="gradeType" value="letter">
+            Letter Grade
+          </label>
+          <label for="gpaView" style="display: initial;">
+            <input id="gpaView" type="radio" name="gradeType" value="gpa">
+            GPA Grade
+          </label>
+        </form>
+      </div>
+      `);
+    // Selects Default Grade View LocalStorage Item
+    const gradeView = localStorage.getItem("DefaultGradeView");
+    // Select All Necessary Elements Through Variables
+    const numberViewRadio = document.getElementById("numberView");
+    const letterViewRadio = document.getElementById("letterView");
+    const gpaViewRadio = document.getElementById("gpaView");
+    // Enable The Radio Button With The Currently Active Grade View
+    if (gradeView === "number") {
+      numberViewRadio.checked = true;
+    }
+    if (gradeView === "letter") {
+      letterViewRadio.checked = true;
+    }
+    if (gradeView === "gpa") {
+      gpaViewRadio.checked = true;
+    }
+    // This Is To Remove The Default 600px Width On FaceBox Element
+    document.getElementById("averageInfo").parentElement.parentElement.style = "width: auto";
+
+    // Change Grade View Type On Click
+    document.querySelector("div#averageInfo > form").addEventListener("click", () => {
+      // Select Form Element
+      const form = document.querySelector("div#averageInfo > form");
+      // Get User Selection From Form
+      const data = new FormData(form);
+      let choice;
+      // Loop Through Form Data To Find User Choice
+      for (const entry of data) {
+        choice = entry[1];
+      }
+      setGradeView(choice);
+    });
   });
 }
-
-if ($('#progress-card').length === 1) {
-  $('body').append("<div style='display:none'><div id='editgfloat'></div></div>");
-  $('#profile-links').append("<br /><a href='#editgfloat' id='editg' style='margin-right:3px;'>Edit Grades</a>");
-  $('#editgfloat').append("<form style='padding-bottom:10px;' id='modifygrades'></form>");
-
-  $("a#editg").fancybox({
-    'type': 'inline',
-    'autoScale': true,
-    'autoDimensions': true,
-    'overlayOpacity': 0,
-    'transitionIn': 'elastic',
-    'transitionOut': 'elastic',
-    'padding': 20,
-    'centerOnScroll': true
-  });
-
-  var number = 0;
-  var links = document.querySelectorAll('tr[style="cursor: pointer"]');
-
-  for (var i = 0; i < links.length; i++) {
-    var ck = $("#progress-card tr td:nth-child(5)")[i].innerHTML;
-    if (ck == "-") {} else {
-      number = number + 1;
-      var newid = number + "active";
-      var kk = links[i];
-      kk.setAttribute("id", newid);
-    }
-  }
-  var dop = 0;
-  var aclass = [];
-  for (var t = 0; t < number; t++) {
-    dop = dop + 1;
-    var dopid = dop + "active";
-    var ioid = dop + "val";
-    var jid = dop + "grade";
-    var popo = document.getElementById(dopid).cells[1].innerText;
-    var mopo = document.getElementById(dopid).cells[4].children[0];
-    mopo.setAttribute("id", jid);
-    var cholo = document.getElementById(dopid).cells[4].children[0].innerText.substring(1);
-    $('#modifygrades').append(popo + "<input style='margin:5px;' id=" + ioid + " type='number' step='.01' value=" + cholo + " min='0' max='110'></input><br />");
-    aclass.push(dop);
-
-  }
-
-  $('#modifygrades').append("<a class='btn btn-danger' id='rstbtn' style='margin-right:5px;'>Reset</a><a class='btn btn-warning' id='clearbtn' style='margin-right:5px;'>Clear</a><a style='margin-right:5px;' id='setbtn' class='btn btn-success'>Set</a><a style='float:right;margin-left:50px;' id='savebtn' class='btn btn-danger'>Save</a>");
-}
-
-function setsavedgrades() {
-  if (sessionStorage.length === 1) {
-    var check = JSON.parse(sessionStorage.getItem('SavedGrades'));
-    if (check.length > 0) {
-      $('#modifygrades').prepend("<p id='warningsave' style='background-color: #ffffa7;text-align: center;border-radius: 10px;'>These are not your real grades, click reset to see your actual grades</p>");
-      for (var p = 0; p < aclass.length; p++) {
-        var iop = aclass[p];
-        var jj = check[p];
-        var catag;
-        var gimg;
-        var ncolor;
-        var ooid = iop + "active";
-        var gid = iop + "grade";
-        var nio = iop + "newgrades";
-        var dopo = document.getElementById(ooid).cells[4].children[0];
-        if (jj === "") {
-          dopo.style.display = "initial";
-        } else {
-          if (jj >= 90) {
-            gimg = "/img/ico/star.png";
-            catag = "Honors";
-            ncolor = "#0087FF";
-          } else {
-            if (jj >= 80) {
-              gimg = "/img/ico/tick.png";
-              catag = "Passing";
-              ncolor = "#1FBA24";
-            } else {
-              if (jj >= 65) {
-                gimg = "/img/ico/error.png";
-                catag = "Borderline";
-                ncolor = "#AA9901";
-              } else {
-                if (jj <= 64) {
-                  gimg = "/img/ico/exclamation.png";
-                  catag = "Failing";
-                  ncolor = "#CF1920";
-                }
-              }
-            }
-          }
-          dopo.style.display = "none";
-          $("#" + nio).remove();
-          $("<span id=" + nio + " style=color:" + ncolor + " data-gtype=" + catag + "><img src=" + gimg + "> " + jj + "</span>").insertBefore("#" + gid);
-        }
-      }
-      getAverage();
-    }
-  }
-}
-window.onload = setsavedgrades();
-
-if (sessionStorage.length === 1) {
-  $("#savebtn").attr("disabled", true);
-}
-
-$("#savebtn").click(function () {
-  if ($("#savebtn")[0].attributes.length === 3) {
-    var SavedGrades = [];
-    for (var o = 1; o < number + 1; o++) {
-      var opop = o + "val";
-      var oj = $("#" + opop).val();
-      SavedGrades.push(oj);
-    }
-    sessionStorage.setItem('SavedGrades', JSON.stringify(SavedGrades));
-    $("#savebtn").attr("disabled", true);
-    setsavedgrades();
-  }
-});
-
-$("#clearbtn").click(function () {
-  $(':input', '#modifygrades').val('');
-});
-
-$("#rstbtn").click(function () {
-  for (var q = 0; q < number; q++) {
-    $("#" + noo).remove();
-    $("#" + number + "newgrades").remove();
-    var ioq = aclass[q];
-    var noo = ioq + "newgrades";
-    var kid = ioq + "grade";
-    document.getElementById(kid).style.display = "initial";
-    $("#modifygrades")[0].reset();
-  }
-  $('#warningsave').remove();
-  $("#savebtn").removeAttr("disabled");
-  sessionStorage.clear();
-  getAverage();
-});
-
-$("#setbtn").click(function () {
-  for (var p = 0; p < aclass.length; p++) {
-    var iop = aclass[p];
-    var mmm = iop + "val";
-    var jj = $("#" + mmm).val();
-    var catag;
-    var gimg;
-    var ncolor;
-    var ooid = iop + "active";
-    var gid = iop + "grade";
-    var nio = iop + "newgrades";
-    var dopo = document.getElementById(ooid).cells[4].children[0];
-    if (jj === "") {
-      dopo.style.display = "initial";
-    } else {
-      if (jj >= 90) {
-        gimg = "/img/ico/star.png";
-        catag = "Honors";
-        ncolor = "#0087FF";
-      } else {
-        if (jj >= 80) {
-          gimg = "/img/ico/tick.png";
-          catag = "Passing";
-          ncolor = "#1FBA24";
-        } else {
-          if (jj >= 65) {
-            gimg = "/img/ico/error.png";
-            catag = "Borderline";
-            ncolor = "#AA9901";
-          } else {
-            if (jj <= 64) {
-              gimg = "/img/ico/exclamation.png";
-              catag = "Failing";
-              ncolor = "#CF1920";
-            }
-          }
-        }
-      }
-      dopo.style.display = "none";
-      $("#" + nio).remove();
-      $("<span id=" + nio + " style=color:" + ncolor + " data-gtype=" + catag + "><img src=" + gimg + "> " + jj + "</span>").insertBefore("#" + gid);
-    }
-  }
-  getAverage();
-});

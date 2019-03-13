@@ -58,7 +58,7 @@ You **must** have a userscript manager installed such as
 Then just click on one of the links below and install
 
 * [Greasy Fork](https://greasyfork.org/en/scripts/368390)
-* [OpenUserJs](https://openuserjs.org/###)
+* [OpenUser Js](https://openuserjs.org/scripts/deathhackz/PupilPath_Plus)
 
 #### Userscript manager compatibility guide
 

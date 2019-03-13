@@ -32,7 +32,7 @@ Now all you have to do is go to pupilpath and click on the new bookmark you just
 Screenshots
 -----------
 > **Total Average**
-![Total Average](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/average.png?raw=true "Total Average")
+![Total Average](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/total_average.png?raw=true "Total Average")
 
 > **Average Converter**
 ![Average Converter](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/average_conversion.png?raw=true "Average Converter")
@@ -41,7 +41,7 @@ Screenshots
 ![Grade Changer Button](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/grade_changer_button.png?raw=true "Grade Changer Button")
 
 > **Grade Changer**
-![Grade Changer](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/grade_changer.png?raw=true "Grade Changer")
+![Grade Changer](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/grade_changer_interface.png?raw=true "Grade Changer")
 
 > **Multiple Grade Types**
 ![Multiple Grade Types](https://github.com/DeathHackz/PupilPathPlus/blob/master/screenshots/multi_grade_views.png?raw=true "Multiple Grade Types")

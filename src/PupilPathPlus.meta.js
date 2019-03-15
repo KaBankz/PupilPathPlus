@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          PupilPath Plus
-// @namespace     https://greasyfork.org/en/scripts/368390
-// @version       4.0.0
+// @namespace     https://openuserjs.org/scripts/deathhackz/PupilPath_Plus
+// @version       4.0.1
 // @description   Calculate Your PupilPath Cumulative Average & More
 // @match         https://*.pupilpath.skedula.com/*
 // @author        DeathHackz

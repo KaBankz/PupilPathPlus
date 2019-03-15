@@ -17,16 +17,6 @@ Features
 * Grade Changer ***(visual only)***
 * Bookmarklet Available
 
-If you do not want to install this userscript, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
-
-1. Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link
-2. Then highlight everything (ctrl + a or cmd + a)
-3. Then drag it all with you mouse up to your bookmarks bar
-4. Done!
-
-Now all you have to do is go to pupilpath and click on the new bookmark you just made and you should see your average displayed above your grades.
-This only works on PupilPath!!
-
 
 **NOTE**: The grade changer button is found in your userscript managers menu (example below)
 
@@ -49,6 +39,8 @@ Screenshots
 
 Installation
 ------------
+**USERSCRIPT**
+
 You **must** have a userscript manager installed such as
 
 * [Tampermonkey](https://tampermonkey.net) (Recomended)
@@ -57,8 +49,8 @@ You **must** have a userscript manager installed such as
 
 Then just click on one of the links below and install
 
-* [Greasy Fork](https://greasyfork.org/en/scripts/368390)
 * [OpenUser Js](https://openuserjs.org/scripts/deathhackz/PupilPath_Plus)
+* [Greasy Fork](https://greasyfork.org/en/scripts/368390)
 
 #### Userscript manager compatibility guide
 
@@ -73,6 +65,28 @@ Then just click on one of the links below and install
 ([Source](https://openuserjs.org/about/Userscript-Beginners-HOWTO))
 
 Check [HERE](https://openuserjs.org/about/Userscript-Beginners-HOWTO) for a more detailed compatibility guide.
+
+
+**BOOKMARKLET**
+
+If you do not want to install this userscript, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
+
+**Method 1:**
+1. Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link
+2. Then highlight everything (ctrl + a or cmd + a)
+3. Then drag it all with you mouse up to your bookmarks bar
+4. Done!
+
+**Method 2:**
+1. Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link
+2. Then highlight everything (ctrl + a or cmd + a)
+3. Copy all of the code (ctrl + a or cmd + c)
+4. Then right click on bookmarks bar and select "add page" or "new bookmark"
+5. Name it whatever you want, but for the link paste in the code and save it
+4. Done!
+
+Now all you have to do is go to pupilpath and click on the new bookmark you just made and you should see your average displayed above your grades.
+This only works on PupilPath!!
 
 Permissions
 -----------

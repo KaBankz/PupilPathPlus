@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          PupilPath Plus
 // @namespace     https://greasyfork.org/en/scripts/368390
-// @version       4.0.0
+// @version       4.0.1
 // @description   Calculate Your PupilPath Cumulative Average & More
 // @match         https://*.pupilpath.skedula.com/*
 // @author        DeathHackz
@@ -418,16 +418,17 @@ GM_registerMenuCommand("Change Grades", () => {
     // Setting Up Grade Changer Modal HTML
     jQuery.facebox(`
     <div id="gradeChanger">
+      <h2 style="text-align: center;">Grade Changer</h2>
       <b>
         <h5 id="gradesNotChanged" class="customError" style="display: none; text-align: center; padding: 5px; background-color: #f08080; border-radius: 5px;">Error: You Have Not Made Any Changes!</h5>
         <h5 id="gradesTooHigh" class="customError" style="display: none; text-align: center; padding: 5px; background-color: #f08080; border-radius: 5px;">Error: Grades Must Be Between 0 - 110!</h5>
         <h5 id="changedGrades" class="customWarning" style="display: none; text-align: center; padding: 5px; background-color: #f0eb80; border-radius: 5px;">Warning: Grades Have Been Changed!</h5>
       </b>
       <form>
-        <a class="btn btn-danger" id="resetButton" style="margin-right: 5px; margin-top: 5px;">Reset</a>
-        <a class="btn btn-warning" id="clearButton" style="margin-right: 5px; margin-top: 5px;">Clear</a>
-        <a class="btn btn-success" id="setButton" style="margin-right: 50px; margin-top: 5px;">Set</a>
-        <a class="btn btn-danger" id="saveButton" style="float: right; margin-top: 5px;">Save</a>
+        <a class="btn btn-danger" id="resetButton" style="margin-right: 5px; margin-top: 5px;" title="Reset all grades back to original grades">Reset</a>
+        <a class="btn btn-warning" id="clearButton" style="margin-right: 5px; margin-top: 5px;" title="Clear all grades from inputs">Clear</a>
+        <a class="btn btn-success" id="setButton" style="margin-right: 50px; margin-top: 5px;" title="Set all custom grades">Set</a>
+        <a class="btn btn-danger" id="saveButton" style="float: right; margin-top: 5px;" title="Save/Delete all custom grades (survives reload)">Save</a>
       </form>
     </div>
     `);
@@ -869,17 +870,17 @@ if (document.getElementById("progress-card") !== null) {
         <h4>Letter Grade: ${letterGrade}</h4>
         <h4>GPA: ${gpaGrade}</h4>
         <form>
-          <label for="numberView" style="display: initial;">
+          <label for="numberView" style="display: initial;" title="Show all grades as numbers">
             <input id="numberView" type="radio" name="gradeType" value="number">
-            Number Grade
+            Number Grades
           </label>
-          <label for="letterView" style="display: initial;">
+          <label for="letterView" style="display: initial;" title="Show all grades as letters">
             <input id="letterView" type="radio" name="gradeType" value="letter">
-            Letter Grade
+            Letter Grades
           </label>
-          <label for="gpaView" style="display: initial;">
+          <label for="gpaView" style="display: initial;"  title="Show all grades as gpa's">
             <input id="gpaView" type="radio" name="gradeType" value="gpa">
-            GPA Grade
+            GPA Grades
           </label>
         </form>
       </div>

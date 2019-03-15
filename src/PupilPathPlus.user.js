@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          PupilPath Plus
-// @namespace     https://openuserjs.org/scripts/deathhackz/PupilPath_Plus
+// @namespace     https://github.com/DeathHackz/PupilPathPlus
 // @version       4.0.1
 // @description   Calculate Your PupilPath Cumulative Average & More
 // @match         https://*.pupilpath.skedula.com/*

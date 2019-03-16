@@ -45,31 +45,24 @@ You **must** have a userscript manager installed such as
 
 * [Tampermonkey](https://tampermonkey.net) (Recomended)
 * [Violentmonkey](https://violentmonkey.github.io/)
-* [Greasemonkey](https://www.greasespot.net)
 
 Then just click on one of the links below and install
 
 * [OpenUser Js](https://openuserjs.org/scripts/deathhackz/PupilPath_Plus)
 * [Greasy Fork](https://greasyfork.org/en/scripts/368390)
 
-#### Userscript manager compatibility guide
+**NOTE: THIS SCRIPT MAY NOT WORK WITH ALL USERSCRIPT MANAGERS!!**
 
-|         | Tamper Monkey | Violent Monkey | Grease Monkey |
-|:-------:|:------------:|:-------------:|:------------:|
-|  Chrome |      YES     |      YES      |      NO      |
-| FireFox |      YES     |      YES      |      YES     |
-|   Edge  |      YES     |       NO      |      NO      |
-|  Safari |      YES     |       NO      |      NO      |
-|  Opera  |      YES     |       NO      |      NO      |
+Tested Working:
+  1. TamperMonkey
+  2. ViolentMonkey
 
-([Source](https://openuserjs.org/about/Userscript-Beginners-HOWTO))
-
-Check [HERE](https://openuserjs.org/about/Userscript-Beginners-HOWTO) for a more detailed compatibility guide.
-
+Tested Not-Working:
+  1. GreaseMonkey
 
 **BOOKMARKLET**
 
-If you do not want to install this userscript, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
+If you do not want to install this userscript or a userscript manager, but you want average conversion functionality you can use a bookmarklet instead. If you do not know what a bookmarklet is it is a snippet of JavaScript code that can be ran as a bookmark in your browser ([more info](https://en.wikipedia.org/wiki/Bookmarklet))
 
 **Method 1:**
 1. Go to [this](https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.bookmarklet.min.js) link

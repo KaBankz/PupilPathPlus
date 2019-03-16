@@ -42,7 +42,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 Supported Userscript Extensions:
 * Tampermonkey (recommended)
 * Violentmonkey
-* Greasmonkey (firefox only)
 =================================================================================================================================
 PupilPath Default Libraries
 * jQuery v1.5.1

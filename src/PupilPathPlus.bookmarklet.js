@@ -4,6 +4,25 @@ javascript: (function () {
   if (window.location.origin === "https://pupilpath.skedula.com") {
     // Only Work If Progress Card Exists
     if (document.getElementById('progress-card') !== null) {
+      // Console Warning Message
+      // SetTimeout Is Used To Remove The Source Link
+      setTimeout(
+        console.warn.bind(
+          // Styling Is Used Within The Console Message
+          console,
+          "%c \n %c You Are Using PupilPath Plus %c \n %c Follow %c@DeathHackz%con GitHub ",
+          "",
+          "background: #383b3e; color: #bada55; padding: 3.8px; padding-right: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;",
+          "",
+          "background: #383b3e; color: #bada55; padding: 4px; padding-left: 0px; border-bottom-left-radius: 2px;",
+          "background: #383b3e; color: #C8FF19; padding-top: 4px; padding-bottom: 4px;",
+          "background: #383b3e; color: #bada55; padding: 4px; padding-right: 0px; padding-left: 8px; border-bottom-right-radius: 2px;",
+          "\nDeathHackz: https://github.com/DeathHackz",
+          "\nHomepage:   https://deathhackz.github.io/PupilPathPlus",
+          "\nGitHub:     https://github.com/DeathHackz/PupilPathPlus",
+          "\nSupport:    https://github.com/DeathHackz/PupilPathPlus/issues\n ",
+        )
+      );
       // Creating The Average Container HTML
       document.getElementsByClassName("notification information")[0].insertAdjacentHTML("afterbegin", `<span id="averageContainer"><a id="averageParent" style="color: #585b66; position: static; float: right; padding-top: 10px; padding-right: 10px;">Total Average: <img id="averageIcon" /> <span id="totalAverage"></span></a></span>`);
       // Selects All The Grade Container Elements

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          PupilPath Plus
 // @namespace     https://github.com/DeathHackz/PupilPathPlus
-// @version       4.0.1
+// @version       4.0.2
 // @description   Calculate Your PupilPath Cumulative Average & More
 // @match         https://*.pupilpath.skedula.com/*
 // @author        DeathHackz
@@ -55,6 +55,9 @@ PupilPath Default Libraries
 // Make Entire Script Run In Strict Mode
 "use strict";
 
+// Script Version
+const scriptVersion = "4.0.2";
+
 // Add Menu Items To UserScript Manager
 GM_registerMenuCommand("Visit Homepage", () => {
   window.open("https://deathhackz.github.io/PupilPathPlus");
@@ -62,6 +65,27 @@ GM_registerMenuCommand("Visit Homepage", () => {
 GM_registerMenuCommand("Check For Updates", () => {
   window.open("https://raw.githubusercontent.com/DeathHackz/PupilPathPlus/master/src/PupilPathPlus.user.js");
 });
+
+// Console Warning Message
+// SetTimeout Is Used To Remove The Source Link
+setTimeout(
+  console.warn.bind(
+    // Styling Is Used Within The Console Message
+    console,
+    `%c \n %c You Are Using PupilPath Plus%cv${scriptVersion} %c \n %c    Follow %c@DeathHackz%con GitHub    `,
+    "",
+    "background: #383b3e; color: #bada55; padding: 4px; padding-left: 0px; border-top-left-radius: 2px;",
+    "background: #383b3e; color: #C8FF19; padding: 4px; padding-right: 0px; border-top-right-radius: 2px;",
+    "",
+    "background: #383b3e; color: #bada55; padding: 4px; padding-left: 2.8px; border-bottom-left-radius: 2px;",
+    "background: #383b3e; color: #C8FF19; padding-top: 4px; padding-bottom: 4px;",
+    "background: #383b3e; color: #bada55; padding: 4px; padding-right: 0px; padding-left: 8px; border-bottom-right-radius: 2px;",
+    "\nDeathHackz: https://github.com/DeathHackz",
+    "\nHomepage:   https://deathhackz.github.io/PupilPathPlus",
+    "\nGitHub:     https://github.com/DeathHackz/PupilPathPlus",
+    "\nSupport:    https://github.com/DeathHackz/PupilPathPlus/issues\n ",
+  )
+);
 
 // Define All Functions Before Conditional Statement
 

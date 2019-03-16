@@ -1,3 +1,7 @@
+## Version 4.0.2 (March 16, 2019):
+
+* Minor Under The Hood Changes.
+
 ## Version 4.0.1 (March 15, 2019):
 
 * Visual Changes.

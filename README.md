@@ -1,4 +1,7 @@
-# PupilPath Plus
+# DEPRECATED - PupilPath Plus
+
+> **Warning**: **This userscript is no longer maintained. Bugs will not be fixed, features will not be added. Feel free to fork this repo and fix all the bugs you want and implement all the features you want.**
+
 [![GitHub Release](https://img.shields.io/github/release/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/CHANGELOG.md)
 [![GitHub Issues](https://img.shields.io/github/issues/DeathHackz/PupilPathPlus.svg?longCache=true&style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/issues)
 [![GitHub license](https://img.shields.io/github/license/DeathHackz/PupilPathPlus.svg?style=for-the-badge)](https://github.com/DeathHackz/PupilPathPlus/blob/master/LICENSE)
